@@ -1,24 +1,12 @@
+Invalid HTTP_HOST header: 'dressdrive.sebasmd.com'. You may need to add 'dressdrive.sebasmd.com' to ALLOWED_HOSTS.
 Traceback (most recent call last):
-  File "/home/sebasmdc/python_apps/dressdrive/passenger_wsgi.py", line 1, in <module>
-    from app_core_dressdrive import wsgi
-  File "/home/sebasmdc/python_apps/dressdrive/app_core_dressdrive/wsgi.py", line 12, in <module>
-    from django.core.wsgi import get_wsgi_application
-ModuleNotFoundError: No module named 'django'
-Traceback (most recent call last):
-  File "/home/sebasmdc/python_apps/dressdrive/passenger_wsgi.py", line 1, in <module>
-    from app_core_dressdrive import wsgi
-  File "/home/sebasmdc/python_apps/dressdrive/app_core_dressdrive/wsgi.py", line 12, in <module>
-    from django.core.wsgi import get_wsgi_application
-ModuleNotFoundError: No module named 'django'
-[UID:2320][3914942] Child process with pid: 3915124 was killed by signal: 15, core dumped: no
-2023-01-30 22:09:05.395936 [ERROR] [UID:2320][0] wsgiHandler getApp [application] failed, pApp=(nil).
-[ERROR] [UID:2320][3919428] wsgiHandler getApp [application] failed, pApp=(nil).
-AttributeError: module 'passenger_wsgi' has no attribute 'application'
-[ERROR] [UID:2320][3919428] wsgiHandler getApp [application] failed, pApp=(nil).
-AttributeError: module 'passenger_wsgi' has no attribute 'application'
-[ERROR] [UID:2320][3919428] wsgiHandler getApp [application] failed, pApp=(nil).
-AttributeError: module 'passenger_wsgi' has no attribute 'application'
-[ERROR] [UID:2320][3919428] wsgiHandler getApp [application] failed, pApp=(nil).
-AttributeError: module 'passenger_wsgi' has no attribute 'application'
-[ERROR] [UID:2320][3919428] wsgiHandler getApp [application] failed, pApp=(nil).
-AttributeError: module 'passenger_wsgi' has no attribute 'application'
+  File "/home/sebasmdc/virtualenv/python_apps/dressdrive/3.10/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/sebasmdc/virtualenv/python_apps/dressdrive/3.10/lib/python3.10/site-packages/django/utils/deprecation.py", line 135, in __call__
+    response = self.process_request(request)
+  File "/home/sebasmdc/virtualenv/python_apps/dressdrive/3.10/lib/python3.10/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+  File "/home/sebasmdc/virtualenv/python_apps/dressdrive/3.10/lib/python3.10/site-packages/django/http/request.py", line 148, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'dressdrive.sebasmd.com'. You may need to add 'dressdrive.sebasmd.com' to ALLOWED_HOSTS.
+Bad Request: /

@@ -1,1 +1,1 @@
-from app_core_dressdrive import wsgi
+from app_core_dressdrive.wsgi import application
