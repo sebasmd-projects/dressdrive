@@ -1,0 +1,24 @@
+Traceback (most recent call last):
+  File "/home/sebasmdc/python_apps/dressdrive/passenger_wsgi.py", line 1, in <module>
+    from app_core_dressdrive import wsgi
+  File "/home/sebasmdc/python_apps/dressdrive/app_core_dressdrive/wsgi.py", line 12, in <module>
+    from django.core.wsgi import get_wsgi_application
+ModuleNotFoundError: No module named 'django'
+Traceback (most recent call last):
+  File "/home/sebasmdc/python_apps/dressdrive/passenger_wsgi.py", line 1, in <module>
+    from app_core_dressdrive import wsgi
+  File "/home/sebasmdc/python_apps/dressdrive/app_core_dressdrive/wsgi.py", line 12, in <module>
+    from django.core.wsgi import get_wsgi_application
+ModuleNotFoundError: No module named 'django'
+[UID:2320][3914942] Child process with pid: 3915124 was killed by signal: 15, core dumped: no
+2023-01-30 22:09:05.395936 [ERROR] [UID:2320][0] wsgiHandler getApp [application] failed, pApp=(nil).
+[ERROR] [UID:2320][3919428] wsgiHandler getApp [application] failed, pApp=(nil).
+AttributeError: module 'passenger_wsgi' has no attribute 'application'
+[ERROR] [UID:2320][3919428] wsgiHandler getApp [application] failed, pApp=(nil).
+AttributeError: module 'passenger_wsgi' has no attribute 'application'
+[ERROR] [UID:2320][3919428] wsgiHandler getApp [application] failed, pApp=(nil).
+AttributeError: module 'passenger_wsgi' has no attribute 'application'
+[ERROR] [UID:2320][3919428] wsgiHandler getApp [application] failed, pApp=(nil).
+AttributeError: module 'passenger_wsgi' has no attribute 'application'
+[ERROR] [UID:2320][3919428] wsgiHandler getApp [application] failed, pApp=(nil).
+AttributeError: module 'passenger_wsgi' has no attribute 'application'
