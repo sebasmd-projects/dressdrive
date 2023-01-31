@@ -13,9 +13,73 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+# import admin url patterns
 from django.contrib import admin
-from django.urls import path
 
-urlpatterns = [
-    path('admin/', admin.site.urls),
+#
+from django.urls import path, include
+
+# show static and media files
+from django.conf import settings
+from django.conf.urls.static import static
+
+#
+from django.utils.translation import gettext_lazy as _
+
+# Set the API documentation with drf_yasg
+from drf_yasg.views import get_schema_view
+from drf_yasg import openapi
+
+
+schema_view = get_schema_view(
+    openapi.Info(
+        title="DressDrive - ApiDoc",
+        default_version='v1.0.0',
+        description=_("DressDrive App API documentation"),
+        terms_of_service=f"{settings.BASE_URL}/policies/terms/",
+        contact=openapi.Contact(email=f"{settings.CONTACT_EMAIL}"),
+        license=openapi.License(name="BSD License"),
+    ),
+    public=True,
+)
+
+
+admin_urlpatterns = [
+    path(
+        'admin/',
+        admin.site.urls
+    )
 ]
+
+third_party_url_patterns = [
+    path(
+        '__debug__/',
+        include('debug_toolbar.urls')
+    ),
+    path(
+        'api/docs/',
+        schema_view.with_ui(
+            'swagger',
+            cache_timeout=0
+        ),
+        name='schema-swagger-ui'
+    ),
+    path(
+        'api-auth/',
+        include('rest_framework.urls')
+    )
+]
+
+custom_apps_url_patterns = [
+
+]
+
+urlpatterns = admin_urlpatterns + \
+    third_party_url_patterns + \
+    custom_apps_url_patterns + \
+    static(
+        settings.MEDIA_URL,
+        document_root=settings.MEDIA_ROOT
+    )
+
+print(urlpatterns)
