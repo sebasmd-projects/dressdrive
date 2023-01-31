@@ -1,0 +1,33 @@
+{% load i18n static %}
+
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}">
+
+<head>
+    {% block meta %}{% endblock meta %}
+
+    <title>{% block title %}{% endblock title %}</title>
+
+    {% block favicon %}{% endblock favicon %}
+
+    {% block css %}
+    <link href="{{base_url}}/static/css/styles.css" rel="stylesheet" />
+    {% endblock css %}
+
+    {% block head_js %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js" crossorigin="anonymous"
+        data-search-pseudo-elements defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js"
+        crossorigin="anonymous"></script>
+    {% endblock head_js %}
+</head>
+
+{% block body %}{% endblock body %}
+
+
+{% block body_js %}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+    crossorigin="anonymous"></script>
+<script src="{{base_url}}/static/js/scripts.js"></script>
+{% endblock body_js %}
+</html>

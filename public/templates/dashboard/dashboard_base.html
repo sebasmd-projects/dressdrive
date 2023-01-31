@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+
+{% block body %}
+<body class="nav-fixed">
+    {% include 'dashboard/includes/navbar.html' %}
+
+    <div id="layoutSidenav">
+        {% include 'dashboard/includes/sidenav.html' %}
+        <div id="layoutSidenav_content">        
+            {% block main_content %}{% endblock main_content %}  
+            {% include 'dashboard/includes/footer.html' %}
+        </div>
+    </div>
+</body>
+{% endblock body %}

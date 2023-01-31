@@ -9,63 +9,54 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
-# Validation methods
-from typing import Any
+# Provides a way of using operating system dependent functionality.
+import os
 
-# Date and time library
+# In this file is used to convert string to python list
+import ast
+
+# Is a function from the dotenv library that reads the values from a .env file and sets them as environment variables in your application.
+from dotenv import load_dotenv
+
+# Provides classes for working with dates and times.
 import datetime
 
-# Json utilities
+# Provides functions for encoding and decoding JSON data.
 import json
 
-# Manage paths inside the project
+# Provides a convenient way of working with file system paths.
 from unipath import Path
 
-# Django internationalization
+# Is a function from the Django internationalization (i18n)
+# framework that allows for lazy translation of string values.
+# The _ alias for gettext_lazy is a common convention in Django code.
 from django.utils.translation import gettext_lazy as _
 
-# Django exceptions
+# Is an exception that is raised by Django when there is a problem with the configuration of the project,
+# such as missing required settings.
+# This exception can be caught and handled in the code to provide a custom error message or take other appropriate action.
 from django.core.exceptions import ImproperlyConfigured
 
-# Open json file
-with open("data.json") as f:
-    value = json.loads(f.read())
+# Load environment variables from a .env file in the application
+load_dotenv()
 
-
-def get_value(value_title: str, values: dict = value) -> Any:
-    """ Retrieve a value from the `values` dictionary, based on its `value_title` key.
-
-     Args:
-    - value_title (str): The key to look for in the `values` dictionary.
-    - values (dict, optional): The dictionary to search for the value. Defaults to `value` (from the json file).
-
-    Raises:
-    - ImproperlyConfigured: If the `value_title` key is not found in the `values` dictionary.
-
-    Returns:
-    - Any: The value corresponding to the `value_title` key in the `values` dictionary.
-    """
-    try:
-        return values[value_title]
-    except:
-        msg = _(f"The name of {value_title} doesn't exists")
-        raise ImproperlyConfigured(msg)
-
+file = ""
 
 # Build paths inside the project like this: BASE_DIR.child('public','templates') = public/templates.
 BASE_DIR = Path(__file__).ancestor(2)
+file += f"{BASE_DIR}"
 
 # Locale folder
 LOCALE_PATHS = (BASE_DIR.child('public', 'locale'),)
 
 # Select the environment
-environment = get_value('ENVIRONMENT')
+environment = os.getenv('ENVIRONMENT')
 
 # Global URL
-BASE_URL = get_value('BASE_URL')[environment]
+BASE_URL = json.loads(os.getenv('BASE_URL'))[environment]
 
 # User model
-AUTH_USER_MODEL = get_value('AUTH_USER_MODEL')
+AUTH_USER_MODEL = os.getenv('AUTH_USER_MODEL')
 
 # Athentication method
 AUTHENTICATION_BACKENDS = (
@@ -80,7 +71,7 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-dirpd&)0o=!mhi$8bgz@r7!ngf@^bn8!arcd*c5mrig53%s(^m'
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # Debug mode
@@ -90,10 +81,11 @@ else:
     DEBUG = True
 
 # Allowed Hosts
-ALLOWED_HOSTS = get_value('ALLOWED_HOSTS')[environment]
+ALLOWED_HOSTS = json.loads(os.getenv('ALLOWED_HOSTS'))[environment]
 
 # Cors Allowed Origins
-CORS_ALLOWED_ORIGINS = get_value('CORS_ALLOWED_ORIGINS')[environment]
+CORS_ALLOWED_ORIGINS = json.loads(
+    os.getenv('CORS_ALLOWED_ORIGINS'))[environment]
 
 # SSL Redirect
 if environment == 'prod':
@@ -102,41 +94,43 @@ else:
     SECURE_SSL_REDIRECT = False
 
 # Email Configuration
-# https://docs.djangoproject.com/en/4.0/topics/email/
-EMAIL_BACKEND = get_value('EMAIL_BACKEND')
+# https://docs.djangoproject.com/en/4.1/topics/email/
+EMAIL_BACKEND = os.getenv('EMAIL_BACKEND')
 
 # Email security
-if get_value('EMAIL_SECURITY_CONNECTION').upper() == 'SSL':
+if os.getenv('EMAIL_SECURITY_CONNECTION').upper() == 'SSL':
     EMAIL_USE_SSL = True
-elif get_value('EMAIL_SECURITY_CONNECTION').upper() == 'TLS':
+elif os.getenv('EMAIL_SECURITY_CONNECTION').upper() == 'TLS':
     EMAIL_USE_TLS = True
 else:
-    raise ImproperlyConfigured("You must choose SSL or TLS in the data.json file")
+    raise ImproperlyConfigured(
+        "You must choose SSL or TLS"
+    )
 
 # Email Host
-EMAIL_HOST = get_value('EMAIL_HOST')
+EMAIL_HOST = os.getenv('EMAIL_HOST')
 
 # Email Port
-EMAIL_PORT = get_value('EMAIL_PORT')
+EMAIL_PORT = os.getenv('EMAIL_PORT')
 
 # Email User
-EMAIL_HOST_USER = get_value('EMAIL_HOST_USER')
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
 
 # Email Password
-EMAIL_HOST_PASSWORD = get_value('EMAIL_HOST_PASSWORD')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 
 # Email Default From
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 # Application definition
 # Django Apps
-DJANGO_APPS = get_value('DJANGO_APPS')
+DJANGO_APPS = ast.literal_eval(os.getenv('DJANGO_APPS'))
 
 # Third-party Apps
-THIRD_PARTY_APPS = get_value('THIRD_PARTY_APPS')
+THIRD_PARTY_APPS = ast.literal_eval(os.getenv('THIRD_PARTY_APPS'))
 
 # Local Apps
-LOCAL_APPS = get_value('LOCAL_APPS')
+LOCAL_APPS = ast.literal_eval(os.getenv('LOCAL_APPS'))
 
 # Join all apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -150,9 +144,11 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.middleware.locale.LocaleMiddleware'
+    'django.middleware.locale.LocaleMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
+# Main urls.py file
 ROOT_URLCONF = 'app_core_dressdrive.urls'
 
 # Templates manager
@@ -176,24 +172,23 @@ TEMPLATES = [
 ]
 
 # Root path
-ROOT_URLCONF = get_value('ROOT_URLCONF')
+ROOT_URLCONF = os.getenv('ROOT_URLCONF')
 
 # WSGI aplication
-WSGI_APPLICATION = get_value('WSGI_APPLICATION')
+WSGI_APPLICATION = os.getenv('WSGI_APPLICATION')
 
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
-
-selected_db = get_value('DATABASE')
+selected_db = os.getenv('DATABASE')
 
 database_config = {
-    'CONN_MAX_AGE': get_value('DB_CONN_MAX_AGE'),
-    'NAME': get_value('NAME'),
-    'USER': get_value('USER'),
-    'PASSWORD': get_value('PASSWORD'),
-    'HOST': get_value('HOST'),
-    'PORT': get_value('PORT'),
+    'CONN_MAX_AGE': int(os.getenv('DB_CONN_MAX_AGE')),
+    'NAME': os.getenv('NAME'),
+    'USER': os.getenv('USER'),
+    'PASSWORD': os.getenv('PASSWORD'),
+    'HOST': os.getenv('HOST'),
+    'PORT': os.getenv('PORT'),
 }
 
 if selected_db == 'postgresql':
@@ -213,16 +208,15 @@ elif selected_db == 'mysql':
 else:
     DATABASES = {
         'default': {
-            'CONN_MAX_AGE': get_value('DB_CONN_MAX_AGE'),
+            'CONN_MAX_AGE': int(os.getenv('DB_CONN_MAX_AGE')),
             'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR.child(f'{get_value("NAME")}.sqlite3'),
+            'NAME': BASE_DIR.child(f'{os.getenv("NAME")}.sqlite3'),
         }
     }
 
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
-
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -241,15 +235,14 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
-
-LANGUAGE_CODE = get_value('LANGUAGE_CODE')
+LANGUAGE_CODE = os.getenv('LANGUAGE_CODE')
 
 LANGUAGES = [
     ('en', _('English')),
     ('es', _('Spanish')),
 ]
 
-TIME_ZONE = get_value('TIME_ZONE')
+TIME_ZONE = os.getenv('TIME_ZONE')
 
 USE_I18N = True
 
@@ -260,7 +253,6 @@ USE_L10N = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
-
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR.child('public', 'static')]
 
@@ -282,7 +274,9 @@ REST_FRAMEWORK = {
 
 # SIMPLE_JWT Config
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': datetime.timedelta(days=get_value('ACCESS_TOKEN_LIFETIME'))
+    'ACCESS_TOKEN_LIFETIME': datetime.timedelta(
+        days=int(os.getenv('ACCESS_TOKEN_LIFETIME'))
+    )
 }
 
 # SWAGGER Config

@@ -37,7 +37,7 @@ schema_view = get_schema_view(
         default_version='v1.0.0',
         description=_("DressDrive App API documentation"),
         terms_of_service=f"{settings.BASE_URL}/policies/terms/",
-        contact=openapi.Contact(email=f"{settings.CONTACT_EMAIL}"),
+        contact=openapi.Contact(email=f"{settings.EMAIL_HOST_USER}"),
         license=openapi.License(name="BSD License"),
     ),
     public=True,
@@ -71,7 +71,7 @@ third_party_url_patterns = [
 ]
 
 custom_apps_url_patterns = [
-
+    path('auth/',include('apps.authentication.login.urls'))
 ]
 
 urlpatterns = admin_urlpatterns + \
@@ -81,5 +81,3 @@ urlpatterns = admin_urlpatterns + \
         settings.MEDIA_URL,
         document_root=settings.MEDIA_ROOT
     )
-
-print(urlpatterns)

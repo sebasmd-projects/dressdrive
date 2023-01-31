@@ -1,0 +1,3 @@
+from rest_framework import serializers
+from apps.default_pagination_serializer import DefaultPaginationSerializer
+
