@@ -66,6 +66,11 @@ class UserModel(AbstractUser, GlobalUserModel):
         _("email address"),
         unique=True
     )
+    
+    privacy = models.BooleanField(
+        _("Terms and Conditions"),
+        default=False
+    )
 
     date_joined = ""
 

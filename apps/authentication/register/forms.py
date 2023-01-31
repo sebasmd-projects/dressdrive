@@ -90,6 +90,18 @@ class UserRegisterForm(forms.ModelForm):
         )
     )
 
+    privacy = forms.BooleanField(
+        label=_('Terms & Conditions'),
+        required=True,
+        widget=forms.CheckboxInput(
+            attrs={
+                'id': 'register_id_privacy_policy',
+                'type': 'checkbox',
+                'class': 'form-check-input',
+            }
+        )
+    )
+    
     def clean_confirm_password(self):
         password_validation(
             self,
@@ -103,5 +115,6 @@ class UserRegisterForm(forms.ModelForm):
             "username",
             "email",
             "first_name",
-            "last_name"
+            "last_name",
+            "privacy"
         )

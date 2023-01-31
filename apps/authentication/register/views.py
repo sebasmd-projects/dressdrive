@@ -22,14 +22,17 @@ class UserRegisterView(FormView):
             first_name=form.cleaned_data['first_name'],
             last_name=form.cleaned_data['last_name'],
             password=form.cleaned_data['password'],
+            privacy=form.cleaned_data['privacy']
         )
-    
         return super(UserRegisterView, self).form_valid(form)
-    
+
+    def form_invalid(self, form):
+        print("Nop, así no")
+        return super(UserRegisterView, self).form_invalid(form)
+
     def get_success_url(self):
         next_url = self.request.GET.get('next')
         if next_url:
             return next_url
         else:
             return reverse('admin:index')
-        

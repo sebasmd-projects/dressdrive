@@ -97,7 +97,7 @@
                                 <div class="card-body px-5 py-4">
                                     <div class="small text-center">
                                         {% trans "New user?" %}
-                                        <a href="auth-register-social.html">{% trans 'Create an account!' %}</a>
+                                        <a href="{% url 'authentication_register:user-register' %}">{% trans 'Create an account!' %}</a>
                                     </div>
                                 </div>
                             </div>
