@@ -258,7 +258,8 @@ STATIC_URL = '/static/'
 if environment == 'local':
     STATIC_ROOT = BASE_DIR.child('public', 'static') 
 else:
-    STATIC_ROOT = 'public_html/static'
+    STATIC_ROOT = os.getenv('STATIC_ROOT')
+    
 # Where you copy the app files from?
 STATICFILES_DIRS = [BASE_DIR.child('static')] 
 
