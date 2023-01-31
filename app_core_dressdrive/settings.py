@@ -182,14 +182,29 @@ WSGI_APPLICATION = os.getenv('WSGI_APPLICATION')
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 selected_db = os.getenv('DATABASE')
 
-database_config = {
+connection_type = os.getenv('CONNECTION_TYPE')
+
+default_database = {
     'CONN_MAX_AGE': int(os.getenv('DB_CONN_MAX_AGE')),
     'NAME': os.getenv('NAME'),
     'USER': os.getenv('USER'),
     'PASSWORD': os.getenv('PASSWORD'),
-    'HOST': os.getenv('HOST'),
-    'PORT': int(os.getenv('PORT')),
+    'HOST': os.getenv('HOST')
 }
+
+if connection_type == "local":
+    database_config = {
+        **default_database,
+    }
+else:
+    database_config = {
+        'PORT': os.getenv('PORT'),
+        **default_database
+    }
+
+print(f"""
+        {database_config}
+      """)
 
 if selected_db == 'postgresql':
     DATABASES = {
@@ -256,12 +271,12 @@ USE_L10N = True
 STATIC_URL = '/static/'
 # Where are you going to copy the files to?
 if environment == 'local':
-    STATIC_ROOT = BASE_DIR.child('public', 'static') 
+    STATIC_ROOT = BASE_DIR.child('public', 'static')
 else:
     STATIC_ROOT = os.getenv('STATIC_ROOT')
-    
+
 # Where you copy the app files from?
-STATICFILES_DIRS = [BASE_DIR.child('static')] 
+STATICFILES_DIRS = [BASE_DIR.child('static')]
 
 
 MEDIA_URL = '/media/'
