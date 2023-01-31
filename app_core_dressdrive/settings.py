@@ -58,12 +58,6 @@ BASE_URL = json.loads(os.getenv('BASE_URL'))[environment]
 # User model
 AUTH_USER_MODEL = os.getenv('AUTH_USER_MODEL')
 
-# Athentication method
-AUTHENTICATION_BACKENDS = (
-    'django.contrib.auth.backends.ModelBackend',
-    'apps.authentication.login.backend.EmailOrUsernameModelBackend',
-)
-
 # Session expire cookies
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 
@@ -224,10 +218,6 @@ else:
             'NAME': BASE_DIR.child(f'{os.getenv("NAME")}.sqlite3'),
         }
     }
-    
-print(f"""
-        {DATABASES}
-      """)
 
 
 # Password validation
@@ -266,6 +256,8 @@ USE_TZ = True
 USE_L10N = True
 
 
+SITE_ID = 1
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 STATIC_URL = '/static/'
@@ -285,6 +277,25 @@ MEDIA_ROOT = 'public/media/'
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Athentication method
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'apps.authentication.login.backend.EmailOrUsernameModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend'
+)
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'APP': {
+            'client_id': '123',
+            'secret': '456',
+            'key': ''
+        }
+    }
+}
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_AUTHENTICATION_METHOD = "username_email"
 
 # Rest Framework Config
 REST_FRAMEWORK = {

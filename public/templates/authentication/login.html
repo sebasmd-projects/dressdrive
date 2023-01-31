@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
-{% load i18n %}
+{% load i18n socialaccount %}
+{% providers_media_js %}
 
 {% block meta %}
 {% include 'authentication/includes/login_meta.html' %}

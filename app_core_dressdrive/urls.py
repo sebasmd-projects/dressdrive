@@ -69,8 +69,8 @@ third_party_url_patterns = [
         include('rest_framework.urls')
     ),
     path(
-        'o/',
-        include('oauth2_provider.urls', namespace='oauth2_provider')
+        'accounts/',
+        include('allauth.urls')
     ),
 ]
 
