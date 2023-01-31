@@ -188,7 +188,7 @@ database_config = {
     'USER': os.getenv('USER'),
     'PASSWORD': os.getenv('PASSWORD'),
     'HOST': os.getenv('HOST'),
-    'PORT': os.getenv('PORT'),
+    'PORT': int(os.getenv('PORT')),
 }
 
 if selected_db == 'postgresql':
