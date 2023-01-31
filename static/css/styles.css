@@ -18344,16 +18344,6 @@ body {
   border-color: #333333;
 }
 
-.btn-google {
-  color: #fff;
-  background-color: #ea4335;
-  border-color: #ea4335;
-}
-.btn-google:hover {
-  color: #fff;
-  background-color: #c7392d;
-  border-color: #bb362a;
-}
 .btn-check:focus + .btn-google, .btn-google:focus {
   color: #fff;
   background-color: #c7392d;

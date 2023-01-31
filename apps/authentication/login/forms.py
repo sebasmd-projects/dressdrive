@@ -15,7 +15,7 @@ class UserLoginForm(forms.Form):
                 'id': 'login_email_or_username',
                 'type': 'text',
                 'placeholder': _('Email or Username'),
-                'class': 'form-control form-control-solid',
+                'class': 'form-control',
                 'aria-label': _('Email or Username'),
                 'aria-describedby': 'emailLogin'
             },
@@ -30,7 +30,7 @@ class UserLoginForm(forms.Form):
                 'id': 'login_password',
                 'type': 'password',
                 'placeholder': _('Password'),
-                'class': 'form-control form-control-solid',
+                'class': 'form-control',
                 'aria-label': _('Password'),
                 'aria-describedby': 'login_password'
             }
@@ -38,13 +38,12 @@ class UserLoginForm(forms.Form):
     )
 
     remember_me = forms.BooleanField(
-        label=_('Remember me'),
+        label=_('Remember password'),
         required=False,
         widget=forms.CheckboxInput(
             attrs={
                 'id': 'login_remember_me',
                 'type': 'checkbox',
-                'placeholder': _('Remember me'),
                 'class': 'form-check-input',
             }
         )
@@ -70,7 +69,7 @@ class UpdatePasswordForm(forms.Form):
         widget=forms.PasswordInput(
             attrs={
                 'id': 'update_password',
-                'type': 'text',
+                'type': 'password',
                 'placeholder': _('Current Password'),
                 'class': 'form-control',
                 'aria-label': _('Password'),
@@ -85,7 +84,7 @@ class UpdatePasswordForm(forms.Form):
         widget=forms.PasswordInput(
             attrs={
                 'id': 'update_new_password',
-                'type': 'text',
+                'type': 'password',
                 'placeholder': _('New Password'),
                 'class': 'form-control',
                 'aria-label': _('Password'),
@@ -100,7 +99,7 @@ class UpdatePasswordForm(forms.Form):
         widget=forms.PasswordInput(
             attrs={
                 'id': 'update_confirm_password',
-                'type': 'text',
+                'type': 'password',
                 'placeholder': _('Confirm Password'),
                 'class': 'form-control',
                 'aria-label': _('Password'),
