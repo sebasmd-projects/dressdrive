@@ -202,10 +202,6 @@ else:
         **default_database
     }
 
-print(f"""
-        {database_config}
-      """)
-
 if selected_db == 'postgresql':
     DATABASES = {
         'default': {
@@ -228,6 +224,10 @@ else:
             'NAME': BASE_DIR.child(f'{os.getenv("NAME")}.sqlite3'),
         }
     }
+    
+print(f"""
+        {DATABASES}
+      """)
 
 
 # Password validation
