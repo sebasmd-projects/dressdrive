@@ -254,7 +254,7 @@ USE_L10N = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR.child('public', 'static')
+STATIC_ROOT = BASE_DIR.child('static')
 STATICFILES_DIRS = [BASE_DIR.child('public', 'static')]
 
 MEDIA_URL = '/media/'
