@@ -1,5 +1,6 @@
 #
 from django.db import models
+from django.db.models.signals import post_save
 
 #
 from django.contrib.auth.models import AbstractUser
@@ -7,6 +8,12 @@ from django.contrib.auth.models import AbstractUser
 #
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
+
+#
+from apps.authentication.users.managers import UserManager
+from apps.authentication.users.signals import avatar_directory_path, optimize_image
+
+#
 
 
 class GlobalUserModel(models.Model):
@@ -26,12 +33,12 @@ class GlobalUserModel(models.Model):
     )
 
     updated = models.DateTimeField(
-        _('updated'),
+        _("updated"),
         auto_now=True
     )
 
     order = models.PositiveIntegerField(
-        'order',
+        _("order"),
         default=1,
         blank=True,
         null=True
@@ -42,31 +49,43 @@ class GlobalUserModel(models.Model):
 
 
 class UserModel(AbstractUser, GlobalUserModel):
+    avatar = models.ImageField(
+        _("profile picture"),
+        upload_to=avatar_directory_path,
+        blank=True,
+        null=True
+    )
+
     full_name = models.CharField(
-        _('full name'),
+        _("full name"),
         max_length=300,
-        default=''
+        default=""
     )
 
     email = models.EmailField(
         _("email address"),
         unique=True
     )
-    
+
     date_joined = ""
+
+    REQUIRED_FIELDS = ["email", "first_name", "last_name"]
     
-    REQUIRED_FIELDS = ['email', 'first_name', 'last_name']
-    
+    objects = UserManager()
+
     def save(self, *args, **kwargs):
         self.full_name = f"{self.first_name} {self.last_name}"
+        self.username = f"{self.username.lower()}"
 
         super().save(*args, **kwargs)
-        
+
     def __str__(self) -> str:
         return f"{self.id} - {self.full_name}"
-    
+
     class Meta:
-        db_table = 'apps_authentication_users'
-        verbose_name = 'AUTHENTICATION - User'
-        verbose_name_plural = 'AUTHENTICATION - Users'
-        ordering = ['order', 'id', 'first_name', 'last_name']
+        db_table = "apps_authentication_users"
+        verbose_name = "AUTHENTICATION - User"
+        verbose_name_plural = "AUTHENTICATION - Users"
+        ordering = ["order", "id", "first_name", "last_name"]
+
+post_save.connect(optimize_image, sender=UserModel)

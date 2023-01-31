@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth import authenticate
 from django.utils.translation import gettext_lazy as _
 
-from apps.authentication.functions import change_password_validation
+from apps.authentication.functions import password_validation
 from apps.authentication.users.models import UserModel
 
 
@@ -72,7 +72,6 @@ class UpdatePasswordForm(forms.Form):
                 'type': 'password',
                 'placeholder': _('Current Password'),
                 'class': 'form-control',
-                'aria-label': _('Password'),
                 'aria-describedby': 'update_password'
             }
         )
@@ -87,7 +86,6 @@ class UpdatePasswordForm(forms.Form):
                 'type': 'password',
                 'placeholder': _('New Password'),
                 'class': 'form-control',
-                'aria-label': _('Password'),
                 'aria-describedby': 'update_new_password'
             }
         )
@@ -102,7 +100,6 @@ class UpdatePasswordForm(forms.Form):
                 'type': 'password',
                 'placeholder': _('Confirm Password'),
                 'class': 'form-control',
-                'aria-label': _('Password'),
                 'aria-describedby': 'update_confirm_password'
             }
         )
@@ -115,9 +112,10 @@ class UpdatePasswordForm(forms.Form):
     
     def clean(self):
         super().clean()
-        change_password_validation(
+        password_validation(
             self, 
-            self.cleaned_data['new_password'], 
-            self.cleaned_data['confirm_password'], 
-            self.user
+            p0 = self.cleaned_data['password'],
+            p1 = self.cleaned_data['new_password'],
+            p2 = self.cleaned_data['confirm_password'],
+            user = self.user
         )

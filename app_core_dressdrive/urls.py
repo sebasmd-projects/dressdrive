@@ -71,7 +71,14 @@ third_party_url_patterns = [
 ]
 
 custom_apps_url_patterns = [
-    path('auth/',include('apps.authentication.login.urls'))
+    path(
+        'auth/',
+        include('apps.authentication.login.urls')
+    ),
+    path(
+        'auth/',
+        include('apps.authentication.register.urls')
+    ),
 ]
 
 urlpatterns = admin_urlpatterns + \

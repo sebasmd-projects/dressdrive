@@ -2,12 +2,18 @@ import re
 from django.utils.translation import gettext_lazy as _
 
 
-def change_password_validation(self, p1, p2, user):
+def password_validation(self, p1, p2, p0=None, user=None):
     if user:
         if not user.check_password(self.cleaned_data['password']):
             self.add_error(
                 "password",
                 _("Incorrect current password")
+            )
+
+        if p1 == p0:
+            self.add_error(
+                "password",
+                _("The password can not be the same")
             )
 
     if not re.match(r'^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?\d)(?=.*?[^\w\s])[^\s]{6,}$', p1):

@@ -1,4 +1,4 @@
-{% load i18n static %}
+{% load i18n %}
 <nav class="topnav navbar navbar-expand shadow justify-content-between justify-content-sm-start navbar-light bg-white"
     id="sidenavAccordion">
     <!-- Sidenav Toggle Button-->
@@ -9,7 +9,7 @@
     <!-- * * * * * * When using an image, we recommend the SVG format.-->
     <!-- * * * * * * Dimensions: Maximum height: 32px, maximum width: 240px-->
     <a class="navbar-brand pe-3 ps-4 ps-lg-2" href="{% url 'authentication_login:user-login' %}">
-        {% trans "Recruitment APP" %}
+        {% trans "DressDrive APP" %}
     </a>
     <!-- Navbar Search Input-->
     <!-- * * Note: * * Visible only on and above the lg breakpoint-->
@@ -227,7 +227,7 @@
                     <div class="dropdown-item-icon"><i data-feather="settings"></i></div>
                     Account
                 </a>
-                <a class="dropdown-item" href="#!">
+                <a class="dropdown-item" href="{% url 'authentication_login:user-logout' %}">
                     <div class="dropdown-item-icon"><i data-feather="log-out"></i></div>
                     Logout
                 </a>
