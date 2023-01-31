@@ -254,8 +254,14 @@ USE_L10N = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR.child('public', 'static')
-STATICFILES_DIRS = [BASE_DIR.child('static')]
+# Where are you going to copy the files to?
+if environment == 'local':
+    STATIC_ROOT = BASE_DIR.child('public', 'static') 
+else:
+    STATIC_ROOT = 'public_html/static'
+# Where you copy the app files from?
+STATICFILES_DIRS = [BASE_DIR.child('static')] 
+
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = 'public/media/'
