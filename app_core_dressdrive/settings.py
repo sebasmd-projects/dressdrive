@@ -187,7 +187,7 @@ connection_type = os.getenv('CONNECTION_TYPE')
 default_database = {
     'CONN_MAX_AGE': int(os.getenv('DB_CONN_MAX_AGE')),
     'NAME': os.getenv('NAME'),
-    'USER': os.getenv('USER'),
+    'USER': os.getenv('USER_DB'),
     'PASSWORD': os.getenv('PASSWORD'),
     'HOST': os.getenv('HOST')
 }
