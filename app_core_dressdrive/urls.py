@@ -67,7 +67,11 @@ third_party_url_patterns = [
     path(
         'api-auth/',
         include('rest_framework.urls')
-    )
+    ),
+    path(
+        'o/',
+        include('oauth2_provider.urls', namespace='oauth2_provider')
+    ),
 ]
 
 custom_apps_url_patterns = [

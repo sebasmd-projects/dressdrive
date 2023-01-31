@@ -26,10 +26,6 @@ class UserRegisterView(FormView):
         )
         return super(UserRegisterView, self).form_valid(form)
 
-    def form_invalid(self, form):
-        print("Nop, así no")
-        return super(UserRegisterView, self).form_invalid(form)
-
     def get_success_url(self):
         next_url = self.request.GET.get('next')
         if next_url:
