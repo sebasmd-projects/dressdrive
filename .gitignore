@@ -27,6 +27,7 @@ data.json
 *.so
 
 # Distribution / packaging
+public/static
 .Python
 build/
 develop-eggs/
