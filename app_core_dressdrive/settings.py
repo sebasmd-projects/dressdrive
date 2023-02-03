@@ -290,9 +290,15 @@ ACCOUNT_EMAIL_REQUIRED = True
 
 ACCOUNT_AUTHENTICATION_METHOD = "username_email"
 
-SOCIALACCOUNT_PROVIDERS = ast.literal_eval(
-    os.getenv('SOCIALACCOUNT_PROVIDERS')
-)
+SOCIALACCOUNT_PROVIDERS = {
+    "google": {
+        "APP": {
+            "client_id": os.getenv('SOCIALACCOUNT_PROVIDERS_client_id'),
+            "secret": os.getenv('SOCIALACCOUNT_PROVIDERS_secret'),
+            "key": os.getenv('SOCIALACCOUNT_PROVIDERS_key')
+        }
+    }
+}
 
 # Rest Framework Config
 REST_FRAMEWORK = {
