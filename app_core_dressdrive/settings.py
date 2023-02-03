@@ -293,9 +293,9 @@ ACCOUNT_AUTHENTICATION_METHOD = "username_email"
 SOCIALACCOUNT_PROVIDERS = {
     "google": {
         "APP": {
-            "client_id": os.getenv('SOCIALACCOUNT_PROVIDERS_client_id'),
-            "secret": os.getenv('SOCIALACCOUNT_PROVIDERS_secret'),
-            "key": os.getenv('SOCIALACCOUNT_PROVIDERS_key')
+            "client_id": f"{os.getenv('SOCIALACCOUNT_PROVIDERS_client_id')}",
+            "secret": f"{os.getenv('SOCIALACCOUNT_PROVIDERS_secret')}",
+            "key": f"{os.getenv('SOCIALACCOUNT_PROVIDERS_key')}"
         }
     }
 }
