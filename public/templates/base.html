@@ -11,7 +11,9 @@
 
     <title>{% block title %}{% endblock title %}</title>
 
-    {% block favicon %}{% endblock favicon %}
+    {% block favicon %}
+    <link rel="shortcut icon" href="{{base_url}}/static/assets/img/favicon.png" type="image/x-icon">
+    {% endblock favicon %}
 
     {% block css %}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
