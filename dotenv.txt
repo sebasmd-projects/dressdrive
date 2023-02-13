@@ -1,0 +1,148 @@
+
+# This file contains all data to config the project
+# you must recharge the server if you change something
+
+# Use only local or prod
+ENVIRONMENT = "local"
+
+# Config the url of the project
+BASE_URL = '{
+    "prod": "https://dressdrive.sebasmd.com",
+    "local": "" # example: http://0.0.0.0:8000
+}'
+
+# Static files path | only config this is you are in production
+# If the app is in a subdomain, plase config the path to the .httaccess of the sub domain
+# eg: /home/sebasmdc/public_html/static
+STATIC_ROOT = ""
+
+# Config django apps
+DJANGO_APPS = '[
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+    "django.contrib.sites"
+]'
+
+# Config thirdparty apps
+THIRD_PARTY_APPS = '[
+    "debug_toolbar",
+    "rest_framework",
+    "rest_framework.authtoken",
+    "rest_framework_simplejwt",
+    "corsheaders",
+    "import_export",
+    "drf_yasg",
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
+    "allauth.socialaccount.providers.google"
+]'
+
+# Config local apps
+LOCAL_APPS = '[
+    "apps.authentication.users",
+]'
+
+# Config the model that are going to be use as auth
+AUTH_USER_MODEL = "users.UserModel"
+
+# Default access token lifetime
+ACCESS_TOKEN_LIFETIME = '1'
+
+# Django secret key
+SECRET_KEY= "" # Some random key
+
+# Project language
+LANGUAGE_CODE = "es"
+
+# Project time zone
+TIME_ZONE = "America/Bogota"
+
+# Allowed domains/hosts
+ALLOWED_HOSTS = '{
+    "prod": [
+        "dressdrive.sebasmd.com"
+    ],
+    "local" : [
+        "localhost",
+        "0.0.0.0"
+    ]
+}'
+
+# Cross origin allowed
+CORS_ALLOWED_ORIGINS = '{
+    "prod" : [
+        "https://dressdrive.sebasmd.com"
+    ],
+    "local" : [
+        "http://localhost:3000",
+        "http://0.0.0.0:3000"
+    ]
+}'
+
+# AllAuth social account provider (Google)
+SOCIALACCOUNT_PROVIDERS_client_id = "" # Google provider client id ########-#########gqh.apps.googleusercontent.com
+
+SOCIALACCOUNT_PROVIDERS_secret = "" # Google secret key #####-####################
+
+SOCIALACCOUNT_PROVIDERS_key = ""
+
+# Urls main file
+ROOT_URLCONF = "app_core_dressdrive.urls" # Don't change this
+
+# WSGI app file
+WSGI_APPLICATION = "app_core_dressdrive.wsgi.application" # Don't change this
+
+# DATABASE only can be
+# postgresql, mysql, sqlite
+# If you choose sqlite3 you DO NOT need to specify user, password, host and port
+DATABASE = "postgresql"
+
+# local | remote
+CONNECTION_TYPE = "local"
+
+# Database conn max age (in second)
+# Determines the number of seconds a connection can remain idle in the connection pool before being closed. 
+DB_CONN_MAX_AGE = '5'
+
+# Database name
+# dressdrive_db | sebasmdc_dressdrive 
+NAME = "" # Database name, eg dressdrive_db
+
+# Database asociated user
+# dressdrive_user | sebasmdc_dressdrive_user
+USER_DB = "" # Database user, eg dressdrive_user
+
+# Database user password
+PASSWORD = "" # Database password, eg dressdrive_password
+
+# Database host
+# localhost | 0.0.0.0
+HOST = "localhost" # Database host/url, eg 0.0.0.0
+
+# Database port
+# postgresql default port 5432 | mysql default port 3306
+PORT = "5432"
+
+# Email security connection
+# You can only choose SSL or TLS
+EMAIL_SECURITY_CONNECTION = "SSL"
+
+# Email backend server
+EMAIL_BACKEND = "django_smtp_ssl.SSLEmailBackend"
+
+# Email server
+EMAIL_HOST = "mail.sebasmd.com"
+
+# Email send port
+EMAIL_PORT = "465"
+
+# Email user this in turn is the one sent by default
+EMAIL_HOST_USER = "" # Your email, eg sebastian@sebasmd.com
+
+# Email user password
+EMAIL_HOST_PASSWORD = "" # Your email password
