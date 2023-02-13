@@ -40,11 +40,8 @@ from django.core.exceptions import ImproperlyConfigured
 # Load environment variables from a .env file in the application
 load_dotenv()
 
-file = ""
-
 # Build paths inside the project like this: BASE_DIR.child('public','templates') = public/templates.
 BASE_DIR = Path(__file__).ancestor(2)
-file += f"{BASE_DIR}"
 
 # Locale folder
 LOCALE_PATHS = (BASE_DIR.child('public', 'locale'),)
