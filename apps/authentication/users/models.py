@@ -66,7 +66,7 @@ class UserModel(AbstractUser, GlobalUserModel):
         _("email address"),
         unique=True
     )
-    
+
     privacy = models.BooleanField(
         _("Terms and Conditions"),
         default=False
@@ -75,13 +75,12 @@ class UserModel(AbstractUser, GlobalUserModel):
     date_joined = ""
 
     REQUIRED_FIELDS = ["email", "first_name", "last_name"]
-    
+
     objects = UserManager()
 
     def save(self, *args, **kwargs):
-        self.full_name = f"{self.first_name} {self.last_name}"
+        self.full_name = f"{self.first_name} {self.last_name}".title()
         self.username = f"{self.username.lower()}"
-
         super().save(*args, **kwargs)
 
     def __str__(self) -> str:
@@ -92,5 +91,6 @@ class UserModel(AbstractUser, GlobalUserModel):
         verbose_name = "AUTHENTICATION - User"
         verbose_name_plural = "AUTHENTICATION - Users"
         ordering = ["order", "id", "first_name", "last_name"]
+
 
 post_save.connect(optimize_image, sender=UserModel)

@@ -6,6 +6,7 @@
 *.pot
 *.pyc
 __pycache__/
+__pycache__
 local_settings.py
 db.sqlite3
 db.sqlite3-journal
@@ -13,6 +14,9 @@ media
 *.sqlite3
 random_things.py
 data.json
+
+### allure results ###
+allure_results
 
 # If your build process includes running collectstatic, then you probably don't need or want to include staticfiles/
 # in your Git repository. Update and uncomment the following line accordingly.
