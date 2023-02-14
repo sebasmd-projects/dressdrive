@@ -31,4 +31,4 @@ class UserRegisterView(FormView):
         if next_url:
             return next_url
         else:
-            return reverse('admin:index')
+            return reverse('authentication_login:user-login')
