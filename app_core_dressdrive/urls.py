@@ -67,21 +67,21 @@ third_party_url_patterns = [
     path(
         'api-auth/',
         include('rest_framework.urls')
-    ),
-    path(
-        'accounts/',
-        include('allauth.urls')
-    ),
+    )
 ]
 
 custom_apps_url_patterns = [
     path(
-        'auth/',
+        'account/',
         include('apps.authentication.login.urls')
     ),
     path(
-        'auth/',
+        'account/',
         include('apps.authentication.register.urls')
+    ),
+    path(
+        'account/',
+        include('apps.authentication.users.urls')
     ),
 ]
 

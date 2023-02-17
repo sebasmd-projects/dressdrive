@@ -4,6 +4,7 @@ from django.utils.translation import gettext_lazy as _
 
 from apps.authentication.users.models import UserModel
 
+
 @admin.register(UserModel)
 class UserModelAdmin(UserAdmin):
     list_display = (
@@ -31,6 +32,7 @@ class UserModelAdmin(UserAdmin):
                 'fields': (
                     'username',
                     'email',
+                    'phone',
                     'password'
                 )
             }
@@ -43,8 +45,21 @@ class UserModelAdmin(UserAdmin):
                     'full_name',
                     'first_name',
                     'last_name',
+                    'gender',
+                    'birthday',
+                    'age'
                 )
             }
+        ),
+        (
+            _('Location'),
+            {
+                'fields': (
+                    'latitude',
+                    'longitude',
+                    'location'
+                ),
+            },
         ),
         (
             _('Permissions'),
@@ -92,4 +107,10 @@ class UserModelAdmin(UserAdmin):
         'date_joined',
         'created',
         'updated',
+        'age'
     )
+
+    def age(self, obj):
+        return obj.age()
+    
+    age.short_description = 'Age'

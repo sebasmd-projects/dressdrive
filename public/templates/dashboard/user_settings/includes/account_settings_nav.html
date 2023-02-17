@@ -1,0 +1,8 @@
+{% load i18n static %}
+
+<nav class="nav nav-borders">
+    <a class="nav-link {% if request.path == change_profile_url %}active{% endif %}" href="{{change_profile_url}}">{% trans "Profile" %}</a>
+    <a class="nav-link {% if request.path == change_email_url %}active{% endif %}" href="{{change_email_url}}">{% trans "Email" %}</a>
+    <a class="nav-link {% if request.path == change_password_url %}active{% endif %}" href="{{change_password_url}}">{% trans "Password" %}</a>
+    <a class="nav-link {% if request.path == change_notifications_url %}active{% endif %}" href="{{change_notifications_url}}">{% trans "Notifications" %}</a>
+</nav>
