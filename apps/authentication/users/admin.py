@@ -110,7 +110,11 @@ class UserModelAdmin(UserAdmin):
         'age'
     )
 
+    def full_name(self, obj):
+        return obj.full_name()
+    
     def age(self, obj):
         return obj.age()
     
-    age.short_description = 'Age'
+    age.short_description = _('Full Name')
+    age.short_description = _('Age')

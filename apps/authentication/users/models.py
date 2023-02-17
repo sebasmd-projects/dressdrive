@@ -56,12 +56,6 @@ class UserModel(AbstractUser, GlobalUserModel):
         null=True
     )
 
-    full_name = models.CharField(
-        _("full name"),
-        max_length=300,
-        default=""
-    )
-
     location = models.CharField(
         _("location"),
         max_length=100,
@@ -120,12 +114,16 @@ class UserModel(AbstractUser, GlobalUserModel):
         ordering = ["order", "id", "first_name", "last_name"]
 
     def save(self, *args, **kwargs):
-        self.full_name = f"{self.first_name} {self.last_name}".title()
+        self.first_name = f"{self.first_name}".title()
+        self.last_name = f"{self.last_name}".title()
         self.username = f"{self.username.lower()}"
         super().save(*args, **kwargs)
 
+    def full_name(self):
+        return f"{self.first_name} {self.last_name}"
+
     def __str__(self) -> str:
-        return f"{self.id} - {self.full_name}"
+        return f"{self.id} - {self.first_name} {self.last_name}"
 
     def age(self):
         return date.today().year - self.birthday.year - (
