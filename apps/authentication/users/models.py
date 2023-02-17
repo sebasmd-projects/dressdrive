@@ -56,24 +56,6 @@ class UserModel(AbstractUser, GlobalUserModel):
         null=True
     )
 
-    location = models.CharField(
-        _("location"),
-        max_length=100,
-        default='0'
-    )
-
-    longitude = models.CharField(
-        _("longitude"),
-        max_length=100,
-        default='0'
-    )
-
-    latitude = models.CharField(
-        _("latitude"),
-        max_length=100,
-        default=0
-    )
-
     phone = models.CharField(
         _("phone"),
         max_length=20,

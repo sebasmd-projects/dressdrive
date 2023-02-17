@@ -1,4 +1,4 @@
 User-agent: *
 Disallow: /auth/login
 Disallow: /auth/logout
-Disallow: /accounts/google/login
+Disallow: /account/google/login

@@ -23,7 +23,6 @@
                                 <hr class="my-0" />
                                 <div class="card-body mt-3">
                                     <form method="post">
-
                                         {% csrf_token %}
                                         <input type="hidden" name="next" value="{{ next }}">
                                         <div class="row gx-3">
@@ -119,6 +118,43 @@
                                                     {% endif %}
                                                 </div>
                                             </div>
+                                            
+                                            <div class="col-md-6">
+                                                <div class="input-group mb-3">
+                                                    <span class="input-group-text"><i class="fa-solid fa-venus-mars"></i></span>
+                                                    {{form.gender}}
+                                                    {% if form.gender.errors %}
+                                                    <div class="alert alert-danger" role="alert">
+                                                        {{form.gender.errors}}
+                                                    </div>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="input-group mb-3">
+                                                    <span class="input-group-text"><i class="fa-solid fa-phone"></i></span>
+                                                    {{form.phone}}
+                                                    {% if form.phone.errors %}
+                                                    <div class="alert alert-danger" role="alert">
+                                                        {{form.phone.errors}}
+                                                    </div>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="input-group mb-3">
+                                                    <span class="input-group-text"><i class="fa-solid fa-cake-candles"></i></span>
+                                                    {{form.birthday}}
+                                                    {% if form.birthday.errors %}
+                                                    <div class="alert alert-danger" role="alert">
+                                                        {{form.birthday.errors}}
+                                                    </div>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+
                                         </div>
                                         <div class="d-flex align-items-center justify-content-between">
                                             <div class="form-check">

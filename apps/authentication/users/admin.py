@@ -52,16 +52,6 @@ class UserModelAdmin(UserAdmin):
             }
         ),
         (
-            _('Location'),
-            {
-                'fields': (
-                    'latitude',
-                    'longitude',
-                    'location'
-                ),
-            },
-        ),
-        (
             _('Permissions'),
             {
                 'fields': (
