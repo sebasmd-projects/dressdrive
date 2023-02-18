@@ -227,24 +227,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Athentication method
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
-    'allauth.account.auth_backends.AuthenticationBackend',
     'apps.authentication.login.backend.EmailOrUsernameModelBackend'
 )
-
-
-ACCOUNT_EMAIL_REQUIRED = True
-
-ACCOUNT_AUTHENTICATION_METHOD = "username_email"
-
-SOCIALACCOUNT_PROVIDERS = {
-    "google": {
-        "APP": {
-            "client_id": f"{os.getenv('SOCIALACCOUNT_PROVIDERS_client_id')}",
-            "secret": f"{os.getenv('SOCIALACCOUNT_PROVIDERS_secret')}",
-            "key": f"{os.getenv('SOCIALACCOUNT_PROVIDERS_key')}"
-        }
-    }
-}
 
 # Rest Framework Config
 REST_FRAMEWORK = {

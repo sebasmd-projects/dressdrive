@@ -1,0 +1,45 @@
+{% extends 'dashboard/dashboard_base.html' %}
+
+{% load i18n static %}
+
+{% block title %}{% endblock title %}
+
+{% block main_content %}
+<main>
+    <header class="page-header page-header-compact page-header-light border-bottom bg-white mb-4">
+        <div class="container-xl px-4">
+            <div class="page-header-content">
+                <div class="row align-items-center justify-content-between pt-3">
+                    <div class="col-auto mb-3">
+                        <h1 class="page-header-title">
+                            <div class="page-header-icon"><i data-feather="user"></i></div>
+                            {% block header_title %}{% endblock header_title %}
+                        </h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- Main page content-->
+    <div class="container-xl px-4 mt-4">
+        <!-- Account page navigation-->
+        {% include 'dashboard/user_settings/includes/account_settings_nav.html' %}
+        <hr class="mt-1 mb-4" />
+        {% block global_content %}
+        <div class="row d-flex justify-content-center">
+            <div class="col-lg-6">
+                <!-- Change password card-->
+                <div class="card mb-4">
+                    <div class="card-header text-center">
+                        {% block card_header %}{% endblock card_header %}
+                    </div>
+                    <div class="card-body">
+                        {% block form %}{% endblock form %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endblock global_content %}
+    </div>
+</main>
+{% endblock main_content %}

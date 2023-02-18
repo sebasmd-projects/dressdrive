@@ -4,8 +4,8 @@ import shutil
 from app_core_dressdrive.general_settings import BASE_DIR
 
 
-def run_tests(other_params, delete_folders: bool = False):
-    if delete_folders:
+def run_tests(other_params, delete_folders: str = "no"):
+    if delete_folders == "yes":
         shutil.rmtree(BASE_DIR.child('allure_results'))
         shutil.rmtree(BASE_DIR.child('.pytest_cache'))
 
@@ -31,7 +31,7 @@ if __name__ == "__main__":
 
     try:
         # other_params = input("Other params: ")
-        # delete_folders = bool(input("Delete folders: "))
+        # delete_folders = input("Delete folders (yes/no): ")
         other_params = ""
         delete_folders = True
         run_tests(other_params, delete_folders)

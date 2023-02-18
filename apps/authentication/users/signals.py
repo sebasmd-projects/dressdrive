@@ -15,4 +15,4 @@ def avatar_directory_path(instance, filename):
     """
     This function is used to generate a file path for an avatar image when a user is saved. The path includes the current year, month, and day, as well as the full name of the user and the original filename of the image.
     """
-    return f"user/{instance.full_name}-{instance.id}/avatar/{date.today().year}-{date.today().month}-{date.today().day}/{filename}"
+    return f"user/{instance.id} - {instance.full_name()}/avatar/{date.today().year}-{date.today().month}-{date.today().day}/{filename}"

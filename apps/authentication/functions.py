@@ -32,13 +32,13 @@ def password_validation(self, p1, p2, p0=None, user=None):
         if not user.check_password(self.cleaned_data['password']):
             self.add_error(
                 "password",
-                _("Incorrect current password")
+                _("Incorrect current password.")
             )
         # Check if the new password is the same as the old password
         if p1 == p0:
             self.add_error(
                 "password",
-                _("The password can not be the same")
+                _("The password can not be the same.")
             )
     # Check if the new password meets the requirements
     if not re.match(r'^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?\d)(?=.*?[^\w\s])[^\s]{6,}$', p1):
@@ -53,4 +53,21 @@ def password_validation(self, p1, p2, p0=None, user=None):
         self.add_error(
             "confirm_password",
             _("Passwords don't match")
+        )
+
+def email_validation(self, email1, email2, user=None):
+    if user.email == email1:
+        self.add_error(
+            "confirm_email",
+            _(
+                "The email is the same as the current."
+            )
+        )
+
+    if email1 != email2:
+        self.add_error(
+            "confirm_email",
+            _(
+                "The email addresses do not match."
+            )
         )
