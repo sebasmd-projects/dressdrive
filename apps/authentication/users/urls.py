@@ -26,10 +26,22 @@ urlpatterns = [
         views.UpdateNotificationsView.as_view(),
         name='user_change_notifications'
     ),
+    
+    
     path(
-        _('reset-password/'),
-        views.PasswordResetView.as_view(),
-        name='user_password_reset'
+        _('reset-password/email/'),
+        views.PasswordResetEmailView.as_view(),
+        name='user_password_email_form'
+    ),
+    path(
+        _('reset-password/succesully-sended/'),
+        views.PasswordResetEmailSentView.as_view(),
+        name='user_password_email_sended'
+    ),
+    path(
+        _("reset-password/<uidb64>/<token>/"),
+        views.PasswordResetFormView.as_view(),
+        name="password_reset_form",
     ),
 ]
 

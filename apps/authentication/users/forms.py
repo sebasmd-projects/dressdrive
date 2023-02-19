@@ -1,9 +1,9 @@
+
 from django import forms
-from django.contrib.auth import forms as f
 from django.utils.translation import gettext_lazy as _
 
-from apps.authentication.functions import password_validation, email_validation
 from apps.authentication.users.models import UserModel
+from apps.authentication.functions import password_validation, email_validation
 
 
 class UpdatePasswordForm(forms.Form):
@@ -238,7 +238,7 @@ class UpdateNotificationsForm(forms.Form):
     pass
 
 
-class PasswordResetForm(f.PasswordResetForm):
+class PasswordResetEmailForm(forms.Form):
     email = forms.CharField(
         label=_("Email"),
         required=True,
@@ -246,12 +246,49 @@ class PasswordResetForm(f.PasswordResetForm):
             attrs={
                 "id": "recover_password_email",
                 "type": "email",
-                "placeholder": _("Enter your current email address"),
+                "placeholder": _("Enter registered email"),
                 "class": "form-control"
             }
         )
     )
 
 
-class SetPasswordForm(f.SetPasswordForm):
-    pass
+class PasswordResetFormForm(forms.Form):
+    password = forms.CharField(
+        label=_('New Password'),
+        required=True,
+        widget=forms.PasswordInput(
+            attrs={
+                'id': 'update_new_password',
+                'type': 'password',
+                'placeholder': _('New Password'),
+                'class': 'form-control',
+                'aria-describedby': 'update_new_password'
+            }
+        )
+    )
+
+    confirm_password = forms.CharField(
+        label=_('Confirm Password'),
+        required=True,
+        widget=forms.PasswordInput(
+            attrs={
+                'id': 'update_confirm_password',
+                'type': 'password',
+                'placeholder': _('Confirm Password'),
+                'class': 'form-control',
+                'aria-describedby': 'update_confirm_password'
+            }
+        )
+    )
+
+    def clean(self):
+        super().clean()
+        try:
+            password_validation(
+                self,
+                p1=self.cleaned_data['password'],
+                p2=self.cleaned_data['confirm_password'],
+            )
+        except Exception:
+            raise Exception
