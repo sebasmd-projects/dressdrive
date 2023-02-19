@@ -8,6 +8,9 @@ from apps.authentication.users.models import UserModel
 
 class UserRegisterViewTest(TestCase):
     def setUp(self):
+        """
+        Initialice data
+        """
         self.client = Client()
         self.register_url = reverse("authentication_register:user-register")
         self.valid_data = {
@@ -20,12 +23,18 @@ class UserRegisterViewTest(TestCase):
         }
 
     def test_view_uses_correct_template(self):
+        """
+        Test to validate that the correct template is used
+        """
         response = self.client.get(self.register_url)
         self.assertTemplateUsed(response, "authentication/register.html")
 
     def test_register_invalid(self):
+        """
+        Test to validate that the user is not created
+        """
         invalid_data = {
-            'username': '',
+            'username': 'dontcreateme',
             'email': '',
             'first_name': '',
             'last_name': '',

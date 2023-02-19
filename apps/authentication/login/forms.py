@@ -51,9 +51,11 @@ class UserLoginForm(forms.Form):
         username = self.cleaned_data['username']
         password = self.cleaned_data['password']
 
-        if not authenticate(username=username, password=password):
-            raise forms.ValidationError(
-                _('The credentials are invalid')
-            )
+        if username and password:
+            if not authenticate(username=username, password=password):
+                self.add_error(
+                    'password',
+                    _('The credentials are invalid')
+                )
 
-        return self.cleaned_data
+        return cleaned_data

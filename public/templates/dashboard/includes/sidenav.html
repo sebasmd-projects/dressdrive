@@ -302,6 +302,9 @@
             <div class="sidenav-footer-content">
                 <div class="sidenav-footer-subtitle">{% trans "Logged in as:" %}</div>
                 <div class="sidenav-footer-title">{{user.full_name}}</div>
+                {% if user.is_superuser and user.is_staff %}
+                    <div class="sidenav-footer-subtitle">Super Admin</div>
+                {% endif %}
             </div>
         </div>
     </nav>

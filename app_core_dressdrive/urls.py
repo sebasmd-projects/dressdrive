@@ -30,7 +30,6 @@ from django.utils.translation import gettext_lazy as _
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
-
 schema_view = get_schema_view(
     openapi.Info(
         title="DressDrive - ApiDoc",
@@ -46,7 +45,7 @@ schema_view = get_schema_view(
 
 admin_urlpatterns = [
     path(
-        'admin/',
+        'admin/site/',
         admin.site.urls
     )
 ]
@@ -72,17 +71,17 @@ third_party_url_patterns = [
 
 custom_apps_url_patterns = [
     path(
-        'account/',
+        'accounts/',
         include('apps.authentication.login.urls')
     ),
     path(
-        'account/',
+        'accounts/',
         include('apps.authentication.register.urls')
     ),
     path(
-        'account/',
+        'accounts/',
         include('apps.authentication.users.urls')
-    ),
+    )
 ]
 
 urlpatterns = admin_urlpatterns + \
@@ -92,3 +91,8 @@ urlpatterns = admin_urlpatterns + \
         settings.MEDIA_URL,
         document_root=settings.MEDIA_ROOT
     )
+
+handler400 = "apps.status_errors.views.handler400"
+handler403 = "apps.status_errors.views.handler403"
+handler404 = "apps.status_errors.views.handler404"
+handler500 = "apps.status_errors.views.handler500"

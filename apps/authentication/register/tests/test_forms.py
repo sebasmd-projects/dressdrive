@@ -6,11 +6,10 @@ from apps.authentication.register.forms import (
 )
 
 
-
 def output(self, form, assertType=False):
     print(f"Form: {form.data}")
     if form.errors:
-        print(f"Output: {form.errors['confirm_password']}")
+        print(f"Output: {form.errors}")
     if assertType:
         self.assertTrue(form.is_valid())
     else:
@@ -19,24 +18,36 @@ def output(self, form, assertType=False):
 
 class UserRegisterFormTest(TestCase):
 
-    userForm = {
-        "username": "testuser",
-        "email": "testuser@sebasmd.com",
-        "first_name": "test",
-        "last_name": "user",
-        "privacy": "True"
-    }
+    def setUp(self) -> None:
+        """
+        Data to use in all tests
+        """
+        self.userForm = {
+            "username": "testuser",
+            "email": "testuser@sebasmd.com",
+            "first_name": "test",
+            "last_name": "user",
+            "phone": "3000000000",
+            "gender": "O",
+            "birthday": "16/05/1999",
+            "privacy": "True"
+        }
 
     def test_valid_register_form(self):
+        """
+        Test for a valid sign up 
+        """
         form = UserRegisterForm({
             **self.userForm,
             "password": "TestPassword123*",
             "confirm_password": "TestPassword123*",
-
         })
-        output(self, form, True)
+        output(self, form, assertType=True)
 
     def test_invalid_register_form_password_dont_match(self):
+        """
+        Test for an invalid password match
+        """
         form = UserRegisterForm({
             **self.userForm,
             "password": "TestPassword123!",
@@ -45,6 +56,9 @@ class UserRegisterFormTest(TestCase):
         output(self, form)
 
     def test_invalid_register_form_length(self):
+        """
+        Test for an invalid password length
+        """
         form = UserRegisterForm({
             **self.userForm,
             "password": "12345",
@@ -53,14 +67,20 @@ class UserRegisterFormTest(TestCase):
         output(self, form)
 
     def test_invalid_register_form_mayus(self):
+        """
+        Test for an invalid only minus chars
+        """
         form = UserRegisterForm({
             **self.userForm,
             "password": "testpassword123*",
-            "confirm_password": "testpassword123*",
+            "confirm_password": "testpassword123*"
         })
         output(self, form)
 
     def test_invalid_register_form_minus(self):
+        """
+        Test for an invalid only mayus chars
+        """
         form = UserRegisterForm({
             **self.userForm,
             "password": "TESTPASSWORD123*",
@@ -69,6 +89,9 @@ class UserRegisterFormTest(TestCase):
         output(self, form)
 
     def test_invalid_register_form_number(self):
+        """
+        Test for an invalid no numbers
+        """
         form = UserRegisterForm({
             **self.userForm,
             "password": "TestPassword*",
@@ -77,6 +100,9 @@ class UserRegisterFormTest(TestCase):
         output(self, form)
 
     def test_invalid_register_form_special_char(self):
+        """
+        Test for an invalid no special chars
+        """
         form = UserRegisterForm({
             **self.userForm,
             "password": "TestPassword123",
