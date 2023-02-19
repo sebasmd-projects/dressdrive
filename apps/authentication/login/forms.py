@@ -2,9 +2,6 @@ from django import forms
 from django.contrib.auth import authenticate
 from django.utils.translation import gettext_lazy as _
 
-from apps.authentication.functions import password_validation
-from apps.authentication.users.models import UserModel
-
 
 class UserLoginForm(forms.Form):
     username = forms.CharField(
@@ -54,68 +51,11 @@ class UserLoginForm(forms.Form):
         username = self.cleaned_data['username']
         password = self.cleaned_data['password']
 
-        if not authenticate(username=username, password=password):
-            raise forms.ValidationError(
-                _('The credentials are invalid')
-            )
+        if username and password:
+            if not authenticate(username=username, password=password):
+                self.add_error(
+                    'password',
+                    _('The credentials are invalid')
+                )
 
-        return self.cleaned_data
-
-
-class UpdatePasswordForm(forms.Form):
-    password = forms.CharField(
-        label=_('Current Password'),
-        required=True,
-        widget=forms.PasswordInput(
-            attrs={
-                'id': 'update_password',
-                'type': 'password',
-                'placeholder': _('Current Password'),
-                'class': 'form-control',
-                'aria-describedby': 'update_password'
-            }
-        )
-    )
-
-    new_password = forms.CharField(
-        label=_('New Password'),
-        required=True,
-        widget=forms.PasswordInput(
-            attrs={
-                'id': 'update_new_password',
-                'type': 'password',
-                'placeholder': _('New Password'),
-                'class': 'form-control',
-                'aria-describedby': 'update_new_password'
-            }
-        )
-    )
-
-    confirm_password = forms.CharField(
-        label=_('Confirm Password'),
-        required=True,
-        widget=forms.PasswordInput(
-            attrs={
-                'id': 'update_confirm_password',
-                'type': 'password',
-                'placeholder': _('Confirm Password'),
-                'class': 'form-control',
-                'aria-describedby': 'update_confirm_password'
-            }
-        )
-    )
-
-    def __init__(self, *args, **kwargs):
-        self.user = kwargs.pop('user', None)
-        super(UpdatePasswordForm, self).__init__(*args, **kwargs)
-        
-    
-    def clean(self):
-        super().clean()
-        password_validation(
-            self, 
-            p0 = self.cleaned_data['password'],
-            p1 = self.cleaned_data['new_password'],
-            p2 = self.cleaned_data['confirm_password'],
-            user = self.user
-        )
+        return cleaned_data

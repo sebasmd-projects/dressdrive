@@ -140,6 +140,7 @@
                 <a class="dropdown-item dropdown-notifications-item" href="#!">
                     <img class="dropdown-notifications-item-img"
                         src="{{base_url}}/static/assets/img/illustrations/profiles/profile-2.png" />
+
                     <div class="dropdown-notifications-item-content">
                         <div class="dropdown-notifications-item-content-text">Lorem ipsum dolor sit amet, consectetur
                             adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
@@ -202,10 +203,18 @@
                 href="javascript:void(0);" role="button" data-bs-toggle="dropdown" aria-haspopup="true"
                 aria-expanded="false">
                 {% if user.avatar %}
-                <img class="dropdown-user-img img-fluid" src="{{user.avatar.url}}" />
+                    <img class="dropdown-user-img img-fluid" src="{{user.avatar.url}}" />
                 {% else %}
-                <img class="dropdown-user-img img-fluid"
-                    src="{{base_url}}/static/assets/img/illustrations/profiles/profile-2.png" />
+                    {% if user.gender == "M" %}
+                        <img class="dropdown-user-img img-fluid"
+                            src="{{base_url}}/static/assets/img/illustrations/profiles/profile-2.png" />
+                    {% elif user.gender == "F" %}
+                        <img class="dropdown-user-img img-fluid"
+                        src="{{base_url}}/static/assets/img/illustrations/profiles/profile-1.png" />
+                    {% else %}
+                        <img class="dropdown-user-img img-fluid"
+                        src="{{base_url}}/static/assets/img/illustrations/profiles/profile-7.png" />
+                    {% endif %}
                 {% endif %}
             </a>
             <div class="dropdown-menu dropdown-menu-end border-0 shadow animated--fade-in-up"
@@ -214,8 +223,17 @@
                     {% if user.avatar %}
                     <img class="dropdown-user-img" src="{{user.avatar.url}}" />
                     {% else %}
-                    <img class="dropdown-user-img"
-                        src="{{base_url}}/static/assets/img/illustrations/profiles/profile-2.png" />
+                        {% if user.gender == "M" %}
+                            <img class="dropdown-user-img"
+                                src="{{base_url}}/static/assets/img/illustrations/profiles/profile-2.png" />
+                        {% elif user.gender == "F" %}
+                            <img class="dropdown-user-img"
+                            src="{{base_url}}/static/assets/img/illustrations/profiles/profile-1.png" />
+                        {% else %}
+                            <img class="dropdown-user-img"
+                            src="{{base_url}}/static/assets/img/illustrations/profiles/profile-7.png" />
+                        {% endif %}
+                    
                     {% endif %}
                     <div class="dropdown-user-details">
                         <div class="dropdown-user-details-name">{{user.full_name}}</div>
@@ -223,11 +241,11 @@
                     </div>
                 </h6>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#!">
+                <a class="dropdown-item" href="{{change_profile_url}}">
                     <div class="dropdown-item-icon"><i data-feather="settings"></i></div>
                     Account
                 </a>
-                <a class="dropdown-item" href="{% url 'authentication_login:user-logout' %}">
+                <a class="dropdown-item" href="{{logout_url}}">
                     <div class="dropdown-item-icon"><i data-feather="log-out"></i></div>
                     Logout
                 </a>

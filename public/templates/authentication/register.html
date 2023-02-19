@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'authentication/base_auth.html' %}
 {% load i18n %}
 
 {% block meta %}
@@ -7,189 +7,138 @@
 
 {% block title %}{% trans 'Register' %}{% endblock title %}
 
-{% block body %}
-
-<body class="bg-primary">
-    <div id="layoutAuthentication">
-        <div id="layoutAuthentication_content">
-            <main>
-                <div class="container-xl px-4">
-                    <div class="row justify-content-center">
-                        <div class="col-xl-8 col-lg-9">
-                            <div class="card my-5">
-                                <div class="card-body mt-2 mx-5 text-center">
-                                    <div class="h3 fw-light mb-2">{% trans 'Create an Account' %}</div>
-                                </div>
-                                <hr class="my-0" />
-                                <div class="card-body mt-3">
-                                    <form method="post">
-
-                                        {% csrf_token %}
-                                        <input type="hidden" name="next" value="{{ next }}">
-                                        <div class="row gx-3">
-                                            <div class="col-md-6">
-                                                <div class="input-group mb-3">
-                                                    <span class="input-group-text">
-                                                        <i class="fa-solid fa-pen-to-square"></i>
-                                                    </span>
-                                                    {{form.first_name}}
-                                                    {% if form.first_name.errors %}
-                                                    <div class="alert alert-danger" role="alert">
-                                                        {{form.first_name.errors}}
-                                                    </div>
-                                                    {% endif %}
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="input-group mb-3">
-                                                    <span class="input-group-text">
-                                                        <i class="fa-solid fa-pen-to-square"></i>
-                                                    </span>
-
-                                                    {{form.last_name}}
-
-                                                    {% if form.last_name.errors %}
-                                                    <div class="alert alert-danger" role="alert">
-                                                        {{form.last_name.errors}}
-                                                    </div>
-                                                    {% endif %}
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row gx-3">
-                                            <div class="col-md-6">
-                                                <div class="input-group mb-3">
-                                                    <span class="input-group-text">
-                                                        <i class="bi bi-envelope-open-fill"></i>
-                                                    </span>
-                                                    {{form.email}}
-                                                    {% if form.email.errors %}
-                                                    <div class="alert alert-danger" role="alert">
-                                                        {{form.email.errors}}
-                                                    </div>
-                                                    {% endif %}
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="input-group mb-3">
-                                                    <span class="input-group-text">
-                                                        <i class="bi bi-person-circle"></i>
-                                                    </span>
-                                                    {{form.username}}
-                                                    {% if form.username.errors %}
-                                                    <div class="alert alert-danger" role="alert">
-                                                        {{form.username.errors}}
-                                                    </div>
-                                                    {% endif %}
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row gx-3">
-                                            <div class="col-md-6">
-                                                <div class="input-group mb-3">
-                                                    <span class="input-group-text"><i
-                                                            class="fa-solid fa-lock"></i></span>
-                                                    {{form.password}}
-                                                    <button
-                                                        onclick='togglePasswordVisibility("icon-password", "register_id_password")'
-                                                        class="btn btn-outline-secondary" type="button">
-                                                        <i id="icon-password" class="bi bi-eye-fill"></i>
-                                                    </button>
-                                                    {% if form.password.errors %}
-                                                    <div class="alert alert-danger" role="alert">
-                                                        {{form.password.errors}}
-                                                    </div>
-                                                    {% endif %}
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="input-group mb-3">
-                                                    <span class="input-group-text"><i
-                                                            class="fa-solid fa-lock"></i></span>
-                                                    {{form.confirm_password}}
-                                                    <button
-                                                        onclick='togglePasswordVisibility("icon-confirm_password", "register_id_confirm_password")'
-                                                        class="btn btn-outline-secondary" type="button">
-                                                        <i id="icon-confirm_password" class="bi bi-eye-fill"></i>
-                                                    </button>
-                                                    {% if form.confirm_password.errors %}
-                                                    <div class="alert alert-danger" role="alert">
-                                                        {{form.confirm_password.errors}}
-                                                    </div>
-                                                    {% endif %}
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="d-flex align-items-center justify-content-between">
-                                            <div class="form-check">
-                                                {{form.privacy}}
-                                                <label class="form-check-label" for="register_id_privacy_policy">
-                                                    {% trans "I accept the " %} <a href="#!">{% trans 'Terms &amp; Conditions' %}</a>.
-                                                </label>
-                                                {% if form.privacy.errors %}
-                                                <div class="alert alert-danger" role="alert">
-                                                    {{form.privacy.errors}}
-                                                </div>
-                                                {% endif %}
-                                            </div>
-                                        </div>
-                                        <div class="d-grid gap-2 mt-3">
-                                            <button class="btn btn-primary" type="submit">
-                                                {% trans "Create Account" %}
-                                            </button>
-                                        </div>
-                                    </form>
-                                </div>
-                                <hr class="my-0" />
-                                <div class="card-body text-center">
-                                    <!-- Social login links-->
-                                    <a class="btn btn-outline-secondary mx-1" href="#!">
-                                        <svg class="mx-2" width="18" height="18" xmlns="http://www.w3.org/2000/svg">
-                                            <g fill="#000" fill-rule="evenodd">
-                                                <path
-                                                    d="M9 3.48c1.69 0 2.83.73 3.48 1.34l2.54-2.48C13.46.89 11.43 0 9 0 5.48 0 2.44 2.02.96 4.96l2.91 2.26C4.6 5.05 6.62 3.48 9 3.48z"
-                                                    fill="#EA4335"></path>
-                                                <path
-                                                    d="M17.64 9.2c0-.74-.06-1.28-.19-1.84H9v3.34h4.96c-.1.83-.64 2.08-1.84 2.92l2.84 2.2c1.7-1.57 2.68-3.88 2.68-6.62z"
-                                                    fill="#4285F4"></path>
-                                                <path
-                                                    d="M3.88 10.78A5.54 5.54 0 0 1 3.58 9c0-.62.11-1.22.29-1.78L.96 4.96A9.008 9.008 0 0 0 0 9c0 1.45.35 2.82.96 4.04l2.92-2.26z"
-                                                    fill="#FBBC05"></path>
-                                                <path
-                                                    d="M9 18c2.43 0 4.47-.8 5.96-2.18l-2.84-2.2c-.76.53-1.78.9-3.12.9-2.38 0-4.4-1.57-5.12-3.74L.97 13.04C2.45 15.98 5.48 18 9 18z"
-                                                    fill="#34A853"></path>
-                                                <path fill="none" d="M0 0h18v18H0z"></path>
-                                            </g>
-                                        </svg> {% trans "Sign in with Google" %}
-                                    </a>
-                                </div>
-                                <hr class="my-0" />
-                                <div class="card-body px-5 my-1">
-                                    <div class="small text-center">
-                                        Have an account?
-                                        <a href="{% url 'authentication_login:user-login' %}">Sign in!</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </main>
+{% block auth_form %}
+<div class="col-xl-8 col-lg-9">
+    <div class="card my-5">
+        <div class="card-body mt-2 mx-5 text-center">
+            <div class="h3 fw-light mb-2">{% trans 'Create an Account' %}</div>
         </div>
-        <div id="layoutAuthentication_footer">
-            <footer class="footer-admin mt-auto footer-dark">
-                <div class="container-xl px-4">
-                    <div class="row">
-                        <div class="col-md-6 small">Copyright &copy; Your Website 2021</div>
-                        <div class="col-md-6 text-md-end small">
-                            <a href="#!">Privacy Policy</a>
-                            &middot;
-                            <a href="#!">Terms &amp; Conditions</a>
+        <hr class="my-0" />
+        <div class="card-body mt-3">
+            <form method="post">
+                {% csrf_token %}
+                <input type="hidden" name="next" value="{{ next }}">
+
+                {% if form.errors %}
+                    <div class="alert alert-danger" role="alert">
+                        {{form.first_name.errors}}
+                        {{form.last_name.errors}}
+                        {{form.email.errors}}
+                        {{form.username.errors}}
+                        {{form.password.errors}}
+                        {{form.confirm_password.errors}}
+                        {{form.gender.errors}}
+                        {{form.phone.errors}}
+                        {{form.birthday.errors}}
+                        {{form.privacy.errors}}
+                    </div>
+                {% endif %}
+
+                <div class="row gx-3">
+                    <div class="col-md-6">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </span>
+                            {{form.first_name}}
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </span>
+                            {{form.last_name}}
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">
+                                <i class="bi bi-envelope-open-fill"></i>
+                            </span>
+                            {{form.email}}
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">
+                                <i class="bi bi-person-circle"></i>
+                            </span>
+                            {{form.username}}
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text"><i class="fa-solid fa-lock"></i></span>
+                            {{form.password}}
+                            <button onclick='togglePasswordVisibility("icon-password", "register_id_password")'
+                                class="btn btn-outline-secondary" type="button">
+                                <i id="icon-password" class="bi bi-eye-fill"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text"><i class="fa-solid fa-lock"></i></span>
+                            {{form.confirm_password}}
+                            <button
+                                onclick='togglePasswordVisibility("icon-confirm_password", "register_id_confirm_password")'
+                                class="btn btn-outline-secondary" type="button">
+                                <i id="icon-confirm_password" class="bi bi-eye-fill"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text"><i class="fa-solid fa-venus-mars"></i></span>
+                            {{form.gender}}
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text"><i class="fa-solid fa-phone"></i></span>
+                            {{form.phone}}
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text"><i class="fa-solid fa-cake-candles"></i></span>
+                            {{form.birthday}}
                         </div>
                     </div>
                 </div>
-            </footer>
+
+                <div class="d-flex align-items-center justify-content-between">
+                    <div class="form-check">
+                        {{form.privacy}}
+                        <label class="form-check-label" for="register_id_privacy_policy">
+                            {% trans "I accept the " %} <a href="#!">{% trans 'Terms &amp; Conditions' %}</a>.
+                        </label>
+                    </div>
+                </div>
+
+                <div class="d-grid gap-2 mt-3">
+                    <button class="btn btn-primary" type="submit">
+                        {% trans "Create Account" %}
+                    </button>
+                </div>
+            </form>
+        </div>
+        <hr class="my-0" />
+        <div class="card-body px-5 my-1">
+            <div class="small text-center">
+                {% trans "Have an account?" %}
+                <a href="{{login_url}}">Login!</a>
+            </div>
         </div>
     </div>
-</body>
-{% endblock body %}
+</div>
+{% endblock auth_form %}

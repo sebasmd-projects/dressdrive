@@ -1,0 +1,37 @@
+{% extends 'dashboard/user_settings/user_base.html' %}
+
+{% load i18n static %}
+
+{% block title %}{% trans 'Change Email' %} - {{user.full_name}}{% endblock title %}
+
+{% block header_title %}{% trans "Account Settings - Change Email" %}{% endblock header_title %}
+
+{% block card_header %}{% trans 'Change Email' %}{% endblock card_header %}
+
+{% block form %}
+<form method="post">
+    {% csrf_token %}
+    {% if form.errors %}
+    <div class="alert alert-danger" role="alert">
+        {{form.new_email.errors}}
+        {{form.confirm_email.errors}}
+    </div>
+    {% endif %}
+
+    <!-- Form Group (current password)-->
+    <div class="input-group mb-3">
+        <span class="input-group-text"><i class="fa-solid fa-envelope"></i></span>
+        {{form.new_email}}
+    </div>
+
+    <!-- Form Group (new password)-->
+    <div class="input-group mb-3">
+        <span class="input-group-text"><i class="fa-solid fa-envelope"></i></span>
+        {{form.confirm_email}}
+    </div>
+
+    <div class="d-grid gap-2">
+        <button class="btn btn-primary" type="submit">{% trans "Save" %}</button>
+    </div>
+</form>
+{% endblock form %}

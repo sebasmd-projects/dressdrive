@@ -1,11 +1,11 @@
-from django.urls import reverse_lazy, reverse
+from django.urls import reverse
 from django.shortcuts import redirect
 from django.http import HttpResponseRedirect
 from django.views.generic import View
 from django.views.generic.edit import FormView
-from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
-from django.contrib.auth.mixins import LoginRequiredMixin
-from apps.authentication.login.forms import UserLoginForm, UpdatePasswordForm
+from django.contrib.auth import authenticate, login, logout
+
+from apps.authentication.login.forms import UserLoginForm
 
 
 class UserLoginView(FormView):
@@ -49,34 +49,3 @@ class UserLogoutView(View):
             )
         )
 
-
-class UpdatePasswordView(LoginRequiredMixin, FormView):
-    template_name = "dashboard/user_settings/change_password.html"
-    form_class = UpdatePasswordForm
-    login_url = reverse_lazy('authentication_login:user-login')
-    
-    def get_form_kwargs(self):
-        kwargs = super().get_form_kwargs()
-        kwargs['user'] = self.request.user
-        return kwargs
-    
-    def form_valid(self, form):
-        user = self.request.user
-        user.set_password(form.cleaned_data['new_password'])
-        user.save()
-        update_session_auth_hash(self.request, user)
-        logout(self.request)
-        return super(UpdatePasswordView, self).form_valid(form)
-    
-    def get_success_url(self):
-        next_url = self.request.GET.get('next')
-        if next_url:
-            return next_url
-        else:
-            return reverse('admin:index')
-    
-    # def form_invalid(self, form):
-    #     user = self.request.user
-    #     user.set_password('juan1999@')
-    #     user.save()
-    #     return super(UpdatePasswordView, self).form_invalid(form)

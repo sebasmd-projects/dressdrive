@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+
+{% block body %}
+
+<body class="bg-primary">
+    <div id="layoutAuthentication">
+        <div id="layoutAuthentication_content">
+            <main>
+                <div class="container-xl px-4">
+                    <div class="row justify-content-center">
+                        {% block auth_form %}{% endblock auth_form %}
+                    </div>
+                </div>
+            </main>
+        </div>
+        {% include 'authentication/includes/footer.html' %}
+    </div>
+</body>
+{% endblock body %}

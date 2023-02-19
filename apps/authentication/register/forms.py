@@ -12,6 +12,13 @@ from apps.authentication.users.models import UserModel
 
 
 class UserRegisterForm(forms.ModelForm):
+    CHOICES = (
+        ('', '------'),
+        ('M', _('Male')),
+        ('F', _('Female')),
+        ('O', _('Other')),
+
+    )
     username = forms.CharField(
         label=_("User"),
         required=True,
@@ -24,7 +31,6 @@ class UserRegisterForm(forms.ModelForm):
             }
         )
     )
-
     email = forms.CharField(
         label=_("Email"),
         required=True,
@@ -37,7 +43,6 @@ class UserRegisterForm(forms.ModelForm):
             }
         )
     )
-
     password = forms.CharField(
         label=_('Password'),
         required=True,
@@ -50,7 +55,6 @@ class UserRegisterForm(forms.ModelForm):
             }
         )
     )
-
     confirm_password = forms.CharField(
         label=_('Confirm Password'),
         required=True,
@@ -63,7 +67,6 @@ class UserRegisterForm(forms.ModelForm):
             }
         )
     )
-
     first_name = forms.CharField(
         label=_("First Name"),
         required=True,
@@ -76,7 +79,6 @@ class UserRegisterForm(forms.ModelForm):
             }
         )
     )
-
     last_name = forms.CharField(
         label=_("Last Name"),
         required=True,
@@ -89,7 +91,49 @@ class UserRegisterForm(forms.ModelForm):
             }
         )
     )
-
+    phone = forms.CharField(
+        label=_("Phone"),
+        required=True,
+        widget=forms.TextInput(
+            attrs={
+                'id': 'register_phone',
+                'type': 'text',
+                'placeholder': _('Phone'),
+                'class': 'form-control',
+                'aria-describedby': 'register_phone',
+                'aria-label': _('Phone')
+            }
+        )
+    )
+    gender = forms.ChoiceField(
+        choices=CHOICES,
+        label=_("Gender"),
+        required=True,
+        widget=forms.Select(
+            attrs={
+                'id': 'register_gender',
+                'type': 'text',
+                'placeholder': _('Gender'),
+                'class': 'form-select',
+                'aria-describedby': 'register_gender',
+                'aria-label': _('Gender')
+            }
+        )
+    )
+    birthday = forms.DateField(
+        label=_("Birthday"),
+        required=True,
+        widget=forms.NumberInput(
+            attrs={
+                'id': 'register_birthday',
+                'type': 'date',
+                'placeholder': _('Birthday'),
+                'class': 'form-control',
+                'aria-describedby': 'register_birthday',
+                'aria-label': _('Birthday')
+            }
+        )
+    )
     privacy = forms.BooleanField(
         label=_('Terms & Conditions'),
         required=True,
@@ -101,7 +145,7 @@ class UserRegisterForm(forms.ModelForm):
             }
         )
     )
-    
+
     def clean_confirm_password(self):
         password_validation(
             self,
@@ -116,5 +160,8 @@ class UserRegisterForm(forms.ModelForm):
             "email",
             "first_name",
             "last_name",
+            "phone",
+            "gender",
+            "birthday",
             "privacy"
         )
