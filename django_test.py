@@ -5,7 +5,7 @@ from app_core_dressdrive.general_settings import BASE_DIR
 
 
 def run_tests(other_params, delete_folders: str = "no"):
-    if delete_folders == "yes":
+    if delete_folders == ("yes" or "y" or "YES"):
         shutil.rmtree(BASE_DIR.child('allure_results'))
         shutil.rmtree(BASE_DIR.child('.pytest_cache'))
 
@@ -30,10 +30,8 @@ if __name__ == "__main__":
           """)
 
     try:
-        # other_params = input("Other params: ")
-        # delete_folders = input("Delete folders (yes/no): ")
-        other_params = ""
-        delete_folders = True
+        other_params = input("Other params: ")
+        delete_folders = input("Delete folders (yes/no): ")
         run_tests(other_params, delete_folders)
     except KeyboardInterrupt:
         pass

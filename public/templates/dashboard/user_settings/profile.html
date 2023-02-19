@@ -15,13 +15,26 @@
         <div class="card mb-4 mb-xl-0">
             <div class="card-header text-center">{% trans "Profile Picture" %}</div>
             <div class="card-body text-center">
+                
                 {% if user.avatar %}
-                <img class="img-account-profile rounded-circle mb-2" src="{{user.avatar.url | safe}}" alt="" />
+                <img class="img-account-profile rounded-circle mb-2" src="{{user.avatar.url}}" />
+                {% else %}
+                    {% if user.gender == "M" %}
+                        <img class="img-account-profile rounded-circle mb-2"
+                            src="{{base_url}}/static/assets/img/illustrations/profiles/profile-2.png" />
+                    {% elif user.gender == "F" %}
+                        <img class="img-account-profile rounded-circle mb-2"
+                        src="{{base_url}}/static/assets/img/illustrations/profiles/profile-1.png" />
+                    {% else %}
+                        <img class="img-account-profile rounded-circle mb-2"
+                        src="{{base_url}}/static/assets/img/illustrations/profiles/profile-7.png" />
+                    {% endif %}
                 {% endif %}
+                
                 <form method="post" enctype="multipart/form-data">
                     {% csrf_token %}
                     {{profile_avatar.avatar}}
-                    <button class="btn btn-primary" type="submit">{% trans "Update profile picture" %}</button>
+                    <button class="btn btn-primary" type="submit">{% trans "Save" %}</button>
                 </form>
             </div>
         </div>
@@ -34,7 +47,54 @@
             <div class="card-body">
                 <form method="POST">
                     {% csrf_token %}
-                    {{profile.as_p}}
+
+                    {% if profile.errors %}
+                    <div class="alert alert-danger" role="alert">
+                        {{profile.first_name.errors}}
+                        {{profile.last_name.errors}}
+                        {{profile.phone.errors}}
+                        {{profile.gender.errors}}
+                    </div>
+                    {% endif %}
+
+                    <div class="row gx-3">
+                        <div class="col-md-6">
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </span>
+                                {{profile.first_name}}
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </span>
+                                {{profile.last_name}}
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">
+                                    <i class="fa-solid fa-phone"></i>
+                                </span>
+                                {{profile.phone}}
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">
+                                    <i class="fa-solid fa-venus-mars"></i>
+                                </span>
+                                {{profile.gender}}
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="d-grid gap-2">
                         <button class="btn btn-primary" type="submit">{% trans "Save" %}</button>
                     </div>

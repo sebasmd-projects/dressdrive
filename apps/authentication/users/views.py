@@ -1,23 +1,16 @@
+from django.conf import settings
+from django.views.generic import edit
+from apps.authentication.users import forms
 from django.urls import reverse_lazy, reverse
-from django.contrib.auth import update_session_auth_hash, logout
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import UpdateView
-from django.views.generic.edit import FormView
-
-from apps.authentication.users.forms import (
-    UpdateEmailForm,
-    UpdatePasswordForm,
-    UpdateProfileAvatarForm,
-    UpdateProfileForm,
-    GeneralUpdateProfileForm,
-    UpdateNotificationsForm
-)
-from apps.authentication.users.models import UserModel
+from django.shortcuts import resolve_url, redirect
+from django.utils.translation import gettext_lazy as _
+from django.contrib.auth import get_user_model, logout
+from django.contrib.auth import update_session_auth_hash, logout, views, mixins
 
 
-class UpdatePasswordView(LoginRequiredMixin, FormView):
+class UpdatePasswordView(mixins.LoginRequiredMixin, edit.FormView):
     template_name = "dashboard/user_settings/change_password.html"
-    form_class = UpdatePasswordForm
+    form_class = forms.UpdatePasswordForm
     login_url = reverse_lazy('authentication_login:user-login')
 
     def get_form_kwargs(self):
@@ -41,9 +34,9 @@ class UpdatePasswordView(LoginRequiredMixin, FormView):
             return reverse('admin:index')
 
 
-class UpdateEmailView(LoginRequiredMixin, FormView):
+class UpdateEmailView(mixins.LoginRequiredMixin, edit.FormView):
     template_name = "dashboard/user_settings/change_email.html"
-    form_class = UpdateEmailForm
+    form_class = forms.UpdateEmailForm
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
@@ -64,20 +57,20 @@ class UpdateEmailView(LoginRequiredMixin, FormView):
             return reverse('settings_user:user_change_email')
 
 
-class UpdateProfileView(LoginRequiredMixin, FormView):
+class UpdateProfileView(mixins.LoginRequiredMixin, edit.FormView):
     template_name = "dashboard/user_settings/profile.html"
-    form_class = GeneralUpdateProfileForm
+    form_class = forms.GeneralUpdateProfileForm
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
         current_user = self.request.user
 
-        context["profile_avatar"] = UpdateProfileAvatarForm(
+        context["profile_avatar"] = forms.UpdateProfileAvatarForm(
             user=current_user
         )
 
-        context["profile"] = UpdateProfileForm(user=current_user, initial={
+        context["profile"] = forms.UpdateProfileForm(user=current_user, initial={
             'first_name': current_user.first_name,
             'last_name': current_user.last_name,
             'phone': current_user.phone,
@@ -114,9 +107,9 @@ class UpdateProfileView(LoginRequiredMixin, FormView):
             return reverse('settings_user:user_change_profile')
 
 
-class UpdateNotificationsView(LoginRequiredMixin, FormView):
+class UpdateNotificationsView(mixins.LoginRequiredMixin, edit.FormView):
     template_name = "dashboard/user_settings/notifications.html"
-    form_class = UpdateNotificationsForm
+    form_class = forms.UpdateNotificationsForm
 
     def get_success_url(self):
         next_url = self.request.GET.get('next')
@@ -126,3 +119,52 @@ class UpdateNotificationsView(LoginRequiredMixin, FormView):
             return reverse('settings_user:user_change_notifications')
 
 
+# Class-based password reset views
+# - PasswordResetView sends the mail
+# - PasswordResetDoneView shows a success message for the above
+# - PasswordResetConfirmView checks the link the user clicked and
+#   prompts for a new password
+# - PasswordResetCompleteView shows a success message for the above
+
+UserModel = get_user_model()
+
+
+INTERNAL_RESET_SESSION_TOKEN = "_password_reset_token"
+
+
+class PasswordResetView(views.PasswordResetView):
+    template_name = "authentication/password_reset/password_reset_form.html"
+    
+    email_template_name = "authentication/password_reset/password_reset_email.html"
+    subject_template_name = "authentication/password_reset/password_reset_subject.txt"
+    
+    success_url = reverse_lazy("settings_user:password_reset_done")
+    form_class = forms.PasswordResetForm
+    from_email = settings.DEFAULT_FROM_EMAIL
+    title = _("Password reset")
+    
+    def dispatch(self, request, *args, **kwargs):
+        if self.request.user.is_authenticated:
+            return redirect('settings_user:user_change_password')
+        return super().dispatch(request, *args, **kwargs)
+
+
+class PasswordResetDoneView(views.PasswordResetDoneView):
+    template_name = "authentication/password_reset/password_reset_done.html"
+
+
+class PasswordResetConfirmView(views.PasswordResetConfirmView):
+    form_class = forms.SetPasswordForm
+    success_url = reverse_lazy("settings_user:password_reset_complete")
+    template_name = "authentication/password_reset/password_reset_confirm.html"
+    title = _("Enter new password")
+
+
+class PasswordResetCompleteView(views.PasswordResetCompleteView):
+    template_name = "authentication/password_reset/password_reset_complete.html"
+    title = _("Password reset complete")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["login_url"] = resolve_url(settings.LOGIN_URL)
+        return context

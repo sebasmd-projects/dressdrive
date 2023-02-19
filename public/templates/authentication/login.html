@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'authentication/base_auth.html' %}
 {% load i18n %}
 {% block meta %}
 {% include 'authentication/includes/login_meta.html' %}
@@ -6,83 +6,65 @@
 
 {% block title %}{% trans 'Login' %}{% endblock title %}
 
-{% block body %}
-
-<body class="bg-primary">
-    <div id="layoutAuthentication">
-        <div id="layoutAuthentication_content">
-            <main>
-                <div class="container-xl px-4">
-                    <div class="row justify-content-center">
-                        <div class="col-xl-5 col-lg-6 col-md-8 col-sm-11">
-                            <!-- Social login form-->
-                            <div class="card my-5">
-                                <div class="card-body mt-3 mx-5 text-center">
-                                    <div class="h3 fw-light mb-3">{% trans 'Sign In' %}</div>
-                                </div>
-                                <hr class="my-0" />
-                                <div class="card-body p-5">
-                                    <!-- Login form-->
-                                    <form method="post">
-                                        {% csrf_token %}
-                                        <input type="hidden" name="next" value="{{ next }}">
-                                        <!-- Form Group (email address)-->
-                                        <div class="input-group mb-3">
-                                            <span class="input-group-text"><i class="bi bi-person-circle"></i></span>
-                                            {{form.username}}
-                                            {% if form.username.errors %}
-                                            <div class="alert alert-danger" role="alert">
-                                                {{form.username.errors}}
-                                            </div>
-                                            {% endif %}
-                                        </div>
-                                        <!-- Form Group (password)-->
-                                        <div class="input-group mb-3">
-                                            <span class="input-group-text"><i class="fa-solid fa-lock"></i></span>
-                                            {{form.password}}
-                                            <button
-                                                onclick='togglePasswordVisibility("icon-password", "login_password")'
-                                                class="btn btn-outline-secondary" type="button">
-                                                <i id="icon-password" class="bi bi-eye-fill"></i>
-                                            </button>
-                                            {% if form.password.errors %}
-                                            <div class="alert alert-danger" role="alert">
-                                                {{form.password.errors}}
-                                            </div>
-                                            {% endif %}
-                                        </div>
-                                        <!-- Form Group (forgot password link)-->
-                                        <div class="d-flex align-items-center justify-content-between mb-0">
-                                            <div class="form-check">
-                                                {{form.remember_me}}
-                                                <label class="form-check-label" for="login_remember_me">
-                                                    {% trans 'Remember password' %}
-                                                </label>
-                                            </div>
-                                            <a class="small" href="">{% trans "Forgot your password?" %}</a>
-                                        </div>
-                                        <!-- Form Group (login box)-->
-                                        <div class="d-grid gap-2 mt-3">
-                                            <button class="btn btn-primary" type="submit">
-                                                {% trans "Login" %}
-                                            </button>
-                                        </div>
-                                    </form>
-                                </div>
-                                <hr class="my-0" />
-                                <div class="card-body px-5 py-4">
-                                    <div class="small text-center">
-                                        {% trans "New user?" %}
-                                        <a href="{{register_url}}">{% trans 'Create an account!' %}</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </main>
+{% block auth_form %}
+<div class="col-xl-5 col-lg-6 col-md-8 col-sm-11">
+    <div class="card my-5">
+        <div class="card-body mt-3 mx-5 text-center">
+            <div class="h3 fw-light mb-3">{% trans 'Login' %}</div>
         </div>
-        {% include 'authentication/includes/footer.html' %}
+        <hr class="my-0" />
+        <div class="card-body p-5">
+            <!-- Login form-->
+            <form method="post">
+                {% csrf_token %}
+                <input type="hidden" name="next" value="{{ next }}">
+
+                {% if form.errors %}
+                    <div class="alert alert-danger" role="alert">
+                        {{form.username.errors}}
+                        {{form.password.errors}}
+                    </div>
+                {% endif %}
+
+                <!-- Form Group (email address)-->
+                <div class="input-group mb-3">
+                    <span class="input-group-text"><i class="bi bi-person-circle"></i></span>
+                    {{form.username}}
+                </div>
+                <!-- Form Group (password)-->
+                <div class="input-group mb-3">
+                    <span class="input-group-text"><i class="fa-solid fa-lock"></i></span>
+                    {{form.password}}
+                    <button onclick='togglePasswordVisibility("icon-password", "login_password")'
+                        class="btn btn-outline-secondary" type="button">
+                        <i id="icon-password" class="bi bi-eye-fill"></i>
+                    </button>
+                </div>
+                <!-- Form Group (forgot password link)-->
+                <div class="d-flex align-items-center justify-content-between mb-0">
+                    <div class="form-check">
+                        {{form.remember_me}}
+                        <label class="form-check-label" for="login_remember_me">
+                            {% trans 'Remember password' %}
+                        </label>
+                    </div>
+                    <a class="small" href="{{reset_password}}">{% trans "Forgot your password?" %}</a>
+                </div>
+                <!-- Form Group (login box)-->
+                <div class="d-grid gap-2 mt-3">
+                    <button class="btn btn-primary" type="submit">
+                        {% trans "Login" %}
+                    </button>
+                </div>
+            </form>
+        </div>
+        <hr class="my-0" />
+        <div class="card-body px-5 py-4">
+            <div class="small text-center">
+                {% trans "New user?" %}
+                <a href="{{register_url}}">{% trans 'Create an account!' %}</a>
+            </div>
+        </div>
     </div>
-</body>
-{% endblock body %}
+</div>
+{% endblock auth_form %}

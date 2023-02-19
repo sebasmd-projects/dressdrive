@@ -1,4 +1,5 @@
 from django import forms
+from django.contrib.auth import forms as f
 from django.utils.translation import gettext_lazy as _
 
 from apps.authentication.functions import password_validation, email_validation
@@ -234,4 +235,23 @@ class GeneralUpdateProfileForm(UpdateProfileAvatarForm, UpdateProfileForm):
 
 
 class UpdateNotificationsForm(forms.Form):
+    pass
+
+
+class PasswordResetForm(f.PasswordResetForm):
+    email = forms.CharField(
+        label=_("Email"),
+        required=True,
+        widget=forms.EmailInput(
+            attrs={
+                "id": "recover_password_email",
+                "type": "email",
+                "placeholder": _("Enter your current email address"),
+                "class": "form-control"
+            }
+        )
+    )
+
+
+class SetPasswordForm(f.SetPasswordForm):
     pass

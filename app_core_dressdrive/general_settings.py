@@ -43,6 +43,9 @@ load_dotenv()
 # Build paths inside the project like this: BASE_DIR.child('public','templates') = public/templates.
 BASE_DIR = Path(__file__).ancestor(2)
 
+# Login URL
+LOGIN_URL = 'authentication_login:user-login'
+
 # Locale folder
 LOCALE_PATHS = (BASE_DIR.child('public', 'locale'),)
 
