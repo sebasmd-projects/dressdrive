@@ -221,7 +221,11 @@ STATICFILES_DIRS = [BASE_DIR.child('static')]
 
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = 'public/media/'
+
+if environment == 'local':
+    MEDIA_ROOT = BASE_DIR.child('public', 'media')
+else:
+    MEDIA_ROOT = os.getenv('MEDIA_ROOT')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
