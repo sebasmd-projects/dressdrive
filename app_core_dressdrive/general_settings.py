@@ -211,6 +211,7 @@ SITE_ID = 1
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
+<<<<<<< HEAD
 # Where are you going to copy the files to?
 if environment == 'local':
     STATIC_ROOT = BASE_DIR.child('public', 'static')
@@ -222,6 +223,23 @@ else:
 # Where you copy the app files from?
 STATICFILES_DIRS = [BASE_DIR.child('static')]
 
+=======
+
+
+# Where are you going to copy the files to?
+if environment == 'local':
+    STATIC_ROOT = BASE_DIR.child('static')
+    MEDIA_ROOT = BASE_DIR.child('media')
+else:
+    STATIC_ROOT = os.getenv('STATIC_ROOT')
+    MEDIA_ROOT = os.getenv('MEDIA_ROOT')
+    # Where you copy the app files from?
+    STATICFILES_DIRS = [BASE_DIR.child('static')]
+
+
+
+
+>>>>>>> c77da5190494322124d084d6a547d69c0ceee2bf
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
