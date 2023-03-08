@@ -81,6 +81,10 @@ custom_apps_url_patterns = [
     path(
         'accounts/',
         include('apps.authentication.users.urls')
+    ),
+    path(
+        '',
+        include('apps.home.urls')
     )
 ]
 

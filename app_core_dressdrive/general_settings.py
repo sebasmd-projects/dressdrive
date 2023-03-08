@@ -207,25 +207,24 @@ USE_TZ = True
 
 SITE_ID = 1
 
-# Static files (CSS, JavaScript, Images)
+# Static files (CSS, JavaScript, Images) | Media files
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 STATIC_URL = '/static/'
-# Where are you going to copy the files to?
-if environment == 'local':
-    STATIC_ROOT = BASE_DIR.child('public', 'static')
-else:
-    STATIC_ROOT = os.getenv('STATIC_ROOT')
-
-# Where you copy the app files from?
-STATICFILES_DIRS = [BASE_DIR.child('static')]
-
-
 MEDIA_URL = '/media/'
 
+
+# Where are you going to copy the files to?
 if environment == 'local':
-    MEDIA_ROOT = BASE_DIR.child('public', 'media')
+    STATIC_ROOT = BASE_DIR.child('static')
+    MEDIA_ROOT = BASE_DIR.child('media')
 else:
+    STATIC_ROOT = os.getenv('STATIC_ROOT')
     MEDIA_ROOT = os.getenv('MEDIA_ROOT')
+    # Where you copy the app files from?
+    STATICFILES_DIRS = [BASE_DIR.child('static')]
+
+
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
